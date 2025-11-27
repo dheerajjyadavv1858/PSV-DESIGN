@@ -127,8 +127,8 @@
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.292.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?deps=react@18.2.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.292.0?deps=react@18.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
@@ -143,7 +143,7 @@
       import { createRoot } from 'react-dom/client';
       import { 
         ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, 
-        Instagram, Linkedin, Twitter, Menu, X, Lightbulb, Star, Quote 
+        Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote 
       } from 'lucide-react';
 
       // --- TYPES ---
@@ -181,8 +181,14 @@
         name: "PSV DESIGN N BUILD",
         tagline: "Building with Art, Designing with Soul.",
         email: "psvdzyns@gmail.com",
-        phone: "9220501357",
+        phones: ["9220501357", "9667523157"],
         location: "Sector 65, Gurgaon",
+        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sector+65+Gurgaon",
+        social: {
+          instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
+          facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
+          linkedin: "#"
+        },
         usp: "Designing timeless architecture, built to endure for generations."
       };
 
@@ -847,12 +853,14 @@
             if (rect.bottom > 0 && rect.top < viewportHeight) {
               const speed = 0.1; 
               const shift = (rect.top - viewportHeight / 2) * speed;
+              
               imgRef.current.style.transform = `translateY(${shift}px) scale(1.15)`;
             }
           };
 
           window.addEventListener('scroll', handleScroll);
-          handleScroll(); 
+          handleScroll(); // Initial position
+          
           return () => window.removeEventListener('scroll', handleScroll);
         }, []);
 
@@ -1202,12 +1210,14 @@
                   <div className="space-y-8 text-neutral-300 font-light">
                       <div className="flex flex-col">
                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] mb-2 font-medium">Visit Us</span>
-                          <span className="text-lg md:text-xl">{COMPANY_DETAILS.location}</span>
+                          <a href={COMPANY_DETAILS.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.location}</a>
                       </div>
                       <div className="flex flex-col">
                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] mb-2 font-medium">Contact</span>
-                          <span className="text-lg md:text-xl">{COMPANY_DETAILS.phone}</span>
-                          <span className="text-lg md:text-xl">{COMPANY_DETAILS.email}</span>
+                          {COMPANY_DETAILS.phones.map(phone => (
+                              <span key={phone} className="text-lg md:text-xl block">{phone}</span>
+                          ))}
+                          <span className="text-lg md:text-xl mt-2">{COMPANY_DETAILS.email}</span>
                       </div>
                   </div>
               </div>
@@ -1261,9 +1271,9 @@
               <p className="text-neutral-600 text-sm mb-8">{COMPANY_DETAILS.tagline}</p>
 
               <div className="flex gap-6 mb-12">
-                <a href="#" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Instagram size={20}/></a>
-                <a href="#" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Linkedin size={20}/></a>
-                <a href="#" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Twitter size={20}/></a>
+                <a href={COMPANY_DETAILS.social.instagram} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Instagram size={20}/></a>
+                <a href={COMPANY_DETAILS.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Linkedin size={20}/></a>
+                <a href={COMPANY_DETAILS.social.facebook} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Facebook size={20}/></a>
               </div>
 
               <div className="w-12 h-[1px] bg-[#D4AF37] mb-8 opacity-50"></div>
@@ -1298,9 +1308,14 @@
                 <p className="text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] mb-2 font-medium opacity-80">
                   Website Created by Brand Spark
                 </p>
-                <a href="tel:7380311858" className="text-neutral-500 text-[11px] tracking-widest mb-3 hover:text-white transition-colors">
-                  7380311858
-                </a>
+                <div className="flex flex-col items-center mb-3">
+                   <a href={`tel:${COMPANY_DETAILS.phones[0]}`} className="text-neutral-500 text-[11px] tracking-widest hover:text-white transition-colors">
+                     {COMPANY_DETAILS.phones[0]}
+                   </a>
+                   <a href={`tel:${COMPANY_DETAILS.phones[1]}`} className="text-neutral-500 text-[11px] tracking-widest hover:text-white transition-colors">
+                     {COMPANY_DETAILS.phones[1]}
+                   </a>
+                </div>
                 <div className="flex gap-4">
                     <a href="https://www.instagram.com/brandspark.official?igsh=NzcyeHhhcXo0bm9i" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-[#D4AF37] transition-colors transform hover:scale-110 duration-300">
                         <Instagram size={14}/>
