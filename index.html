@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <!-- Babel for JSX transformation in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
@@ -127,8 +126,8 @@
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?deps=react@18.2.0",
-    "lucide-react": "https://esm.sh/lucide-react@0.292.0?deps=react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.292.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
@@ -174,6 +173,7 @@
         role: string;
         description: string;
         image: string;
+        url?: string;
       }
 
       // --- CONSTANTS ---
@@ -181,15 +181,15 @@
         name: "PSV DESIGN N BUILD",
         tagline: "Building with Art, Designing with Soul.",
         email: "psvdzyns@gmail.com",
-        phones: ["9220501357", "9667523157"],
+        phone1: "9220501357",
+        phone2: "9667523157",
         location: "Sector 65, Gurgaon",
-        googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sector+65+Gurgaon",
-        social: {
-          instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
-          facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
-          linkedin: "#"
-        },
-        usp: "Designing timeless architecture, built to endure for generations."
+        usp: "Designing timeless architecture, built to endure for generations.",
+        // Social Links
+        instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
+        facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
+        // Map Search Query
+        mapLink: "https://www.google.com/maps/search/?api=1&query=Sector+65+Gurgaon"
       };
 
       const SERVICES: Service[] = [
@@ -448,7 +448,7 @@
               ref={ringRef} 
               className={`fixed top-0 left-0 w-10 h-10 border border-[#D4AF37] rounded-full pointer-events-none z-[9998] -ml-5 -mt-5 transition-all duration-300 ease-out hidden md:block mix-blend-difference
                 ${isHovered ? 'scale-[2] bg-[#D4AF37]/20 border-transparent' : 'scale-100'}
-              `}
+              `} 
             />
           </>
         );
@@ -807,9 +807,9 @@
               className={`max-w-7xl mx-auto mb-20 flex flex-col md:flex-row justify-between items-end transition-reveal ${headerVisible ? 'reveal-visible' : 'reveal-hidden'}`}
             >
               <div className="max-w-2xl">
-                 <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium mb-4">Selected Works</p>
-                 <h2 className="text-4xl md:text-6xl font-serif text-white mb-6">Architectural Stories</h2>
-                 <p className="text-neutral-400 text-base font-light leading-relaxed">A collection of spaces defined by light, texture, and silence.</p>
+                  <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium mb-4">Selected Works</p>
+                  <h2 className="text-4xl md:text-6xl font-serif text-white mb-6">Architectural Stories</h2>
+                  <p className="text-neutral-400 text-base font-light leading-relaxed">A collection of spaces defined by light, texture, and silence.</p>
               </div>
               <button className="text-neutral-300 text-xs uppercase tracking-[0.2em] border-b border-[#D4AF37] pb-1 mt-8 md:mt-0 hover:text-[#D4AF37] transition-colors">
                 View All Projects
@@ -853,14 +853,12 @@
             if (rect.bottom > 0 && rect.top < viewportHeight) {
               const speed = 0.1; 
               const shift = (rect.top - viewportHeight / 2) * speed;
-              
               imgRef.current.style.transform = `translateY(${shift}px) scale(1.15)`;
             }
           };
 
           window.addEventListener('scroll', handleScroll);
-          handleScroll(); // Initial position
-          
+          handleScroll(); 
           return () => window.removeEventListener('scroll', handleScroll);
         }, []);
 
@@ -899,14 +897,14 @@
 
             <div className="text-center">
               <div className="overflow-hidden">
-                   <h3 className={`text-3xl md:text-4xl font-serif text-white mb-2 transform transition-transform duration-700 delay-500 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}>
-                       {founder.name}
-                   </h3>
+                    <h3 className={`text-3xl md:text-4xl font-serif text-white mb-2 transform transition-transform duration-700 delay-500 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}>
+                        {founder.name}
+                    </h3>
               </div>
               <div className="overflow-hidden mb-6">
-                   <p className={`text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium transform transition-transform duration-700 delay-700 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}>
-                       {founder.role}
-                   </p>
+                    <p className={`text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium transform transition-transform duration-700 delay-700 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}>
+                        {founder.role}
+                    </p>
               </div>
               
               <p className={`text-neutral-400 font-light text-sm md:text-base leading-relaxed max-w-sm mx-auto transition-opacity duration-1000 delay-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -1048,15 +1046,15 @@
               </div>
 
               <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center z-20">
-                   <div className={`
+                    <div className={`
                       w-12 h-12 rounded-full border border-[#F2B544]/30 bg-[#050505] flex items-center justify-center shadow-[0_0_15px_rgba(242,181,68,0.2)]
                       transition-all duration-700 delay-300
                       ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-                   `}>
+                    `}>
                       <div className="text-[#F2B544] group-hover:scale-110 transition-transform duration-300">
                           {step.icon}
                       </div>
-                   </div>
+                    </div>
               </div>
 
               <div className="hidden md:block w-[42%]"></div>
@@ -1210,14 +1208,20 @@
                   <div className="space-y-8 text-neutral-300 font-light">
                       <div className="flex flex-col">
                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] mb-2 font-medium">Visit Us</span>
-                          <a href={COMPANY_DETAILS.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.location}</a>
+                          <a 
+                            href={COMPANY_DETAILS.mapLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-lg md:text-xl hover:text-[#D4AF37] transition-colors border-b border-transparent hover:border-[#D4AF37] w-fit"
+                          >
+                            {COMPANY_DETAILS.location}
+                          </a>
                       </div>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col gap-1">
                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] mb-2 font-medium">Contact</span>
-                          {COMPANY_DETAILS.phones.map(phone => (
-                              <span key={phone} className="text-lg md:text-xl block">{phone}</span>
-                          ))}
-                          <span className="text-lg md:text-xl mt-2">{COMPANY_DETAILS.email}</span>
+                          <a href={`tel:${COMPANY_DETAILS.phone1}`} className="text-lg md:text-xl hover:text-[#D4AF37] transition-colors w-fit">{COMPANY_DETAILS.phone1}</a>
+                          <a href={`tel:${COMPANY_DETAILS.phone2}`} className="text-lg md:text-xl hover:text-[#D4AF37] transition-colors w-fit">{COMPANY_DETAILS.phone2}</a>
+                          <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-lg md:text-xl mt-2 hover:text-[#D4AF37] transition-colors w-fit">{COMPANY_DETAILS.email}</a>
                       </div>
                   </div>
               </div>
@@ -1271,9 +1275,9 @@
               <p className="text-neutral-600 text-sm mb-8">{COMPANY_DETAILS.tagline}</p>
 
               <div className="flex gap-6 mb-12">
-                <a href={COMPANY_DETAILS.social.instagram} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Instagram size={20}/></a>
-                <a href={COMPANY_DETAILS.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Linkedin size={20}/></a>
-                <a href={COMPANY_DETAILS.social.facebook} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Facebook size={20}/></a>
+                <a href={COMPANY_DETAILS.instagram} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Instagram size={20}/></a>
+                <a href={COMPANY_DETAILS.facebook} target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Facebook size={20}/></a>
+                <a href="#" className="text-neutral-500 hover:text-[#D4AF37] transition-colors"><Linkedin size={20}/></a>
               </div>
 
               <div className="w-12 h-[1px] bg-[#D4AF37] mb-8 opacity-50"></div>
@@ -1308,14 +1312,9 @@
                 <p className="text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] mb-2 font-medium opacity-80">
                   Website Created by Brand Spark
                 </p>
-                <div className="flex flex-col items-center mb-3">
-                   <a href={`tel:${COMPANY_DETAILS.phones[0]}`} className="text-neutral-500 text-[11px] tracking-widest hover:text-white transition-colors">
-                     {COMPANY_DETAILS.phones[0]}
-                   </a>
-                   <a href={`tel:${COMPANY_DETAILS.phones[1]}`} className="text-neutral-500 text-[11px] tracking-widest hover:text-white transition-colors">
-                     {COMPANY_DETAILS.phones[1]}
-                   </a>
-                </div>
+                <a href="tel:7380311858" className="text-neutral-500 text-[11px] tracking-widest mb-3 hover:text-white transition-colors">
+                  7380311858
+                </a>
                 <div className="flex gap-4">
                     <a href="https://www.instagram.com/brandspark.official?igsh=NzcyeHhhcXo0bm9i" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-[#D4AF37] transition-colors transform hover:scale-110 duration-300">
                         <Instagram size={14}/>
