@@ -72,15 +72,11 @@
       }
       .group:hover .animate-shine { animation: shine 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
-      /* Text Reveal Animation */
-      .clip-text-reveal {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-        transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
-      }
-      .clip-text-hidden {
-        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-        transform: translateY(100%);
-      }
+      /* --- 3D FLIP CARD STYLES --- */
+      .perspective-1000 { perspective: 1000px; }
+      .transform-style-3d { transform-style: preserve-3d; }
+      .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+      .rotate-y-180 { transform: rotateY(180deg); }
 
       /* Hover underline */
       .hover-underline {
@@ -113,9 +109,7 @@
       "imports": {
         "react": "https://esm.sh/react@18.2.0",
         "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.292.0",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-        "react/": "https://aistudiocdn.com/react@^19.2.0/"
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
       }
     }
     </script>
@@ -126,7 +120,7 @@
     <script type="text/babel" data-type="module">
       import React, { useState, useEffect, useRef } from 'react';
       import { createRoot } from 'react-dom/client';
-      import { ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote, ArrowRight } from 'lucide-react';
+      import { ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote, ArrowRight, RotateCw } from 'lucide-react';
 
       // --- DATA CONSTANTS ---
       const COMPANY_DETAILS = {
@@ -138,7 +132,8 @@
         location: "Sector 65, Gurgaon",
         instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
         facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
-        mapLink: "https://www.google.com/maps/search/?api=1&query=Sector+65+Gurgaon"
+        // UPDATED MAP LINK
+        mapLink: "https://share.google/R0bjJxFirstmoNIOt"
       };
 
       const SERVICES = [
@@ -149,12 +144,62 @@
         { id: 5, title: "Landscape", description: "Sculpting the earth to frame the art.", icon: <Ruler className="w-6 h-6" /> }
       ];
 
+      // --- UPDATED PROJECTS WITH ENHANCED DESCRIPTIONS ---
       const PROJECTS = [
-        { id: 1, title: "The Obsidian Villa", category: "Residential Architecture", image: "https://picsum.photos/id/122/1600/900" },
-        { id: 2, title: "Azure Horizon Tower", category: "Urban High-Rise", image: "https://picsum.photos/id/124/1600/900" },
-        { id: 3, title: "Gilded Lounge", category: "Luxury Interior", image: "https://picsum.photos/id/142/1600/900" },
-        { id: 4, title: "Eco-Sanctuary", category: "Sustainable Living", image: "https://picsum.photos/id/136/1600/900" },
-        { id: 5, title: "Minimalist Headquarters", category: "Commercial", image: "https://picsum.photos/id/146/1600/900" }
+        { 
+          id: 1, 
+          title: "The Vanta Residence", 
+          category: "Boutique Residence", 
+          area: "500 Sq. Yd.",
+          location: "Gurgaon",
+          image: "./Architectstories1.jpg",
+          description: "A 500 sq.yd. architectural masterpiece. This boutique residence balances privacy with openness, featuring light wells that pierce through the structure to illuminate the core."
+        },
+        { 
+          id: 2, 
+          title: "Urban Oasis Suites", 
+          category: "Hospitality", 
+          area: "700 Sq. Yd.",
+          location: "Gurgaon City",
+          image: "./Architectstories2.jpg",
+          description: "A 45-room luxury guest house standing tall on a 700 sq.yd. plot. Integrated with in-house dining, banquet halls, and conference facilities, designed for the modern traveler."
+        },
+        { 
+          id: 3, 
+          title: "Royal Acres Estate", 
+          category: "Gated Community", 
+          area: "50 Acres",
+          location: "Outskirts",
+          image: "./Architectstories3.jpg",
+          description: "A royal gated farmhouse community spread across 50 acres. This master plan integrates state-of-the-art facilities with untouched landscape, creating a sanctuary for the elite."
+        },
+        { 
+          id: 4, 
+          title: "The Tijara Pavilion", 
+          category: "Fine Dining", 
+          area: "Farm Lands",
+          location: "Tijara",
+          image: "./Architectstories4.jpg",
+          description: "An exquisite fine dining restaurant nestled in Tijara Farm Lands. The design blurs the line between the built environment and the organic farm setting."
+        },
+        { 
+          id: 5, 
+          title: "The Bianco House", 
+          category: "Luxury Interiors", 
+          area: "Residential",
+          location: "Private Residence",
+          image: "./Architectstories5.jpg",
+          description: "Specially curated interiors for a client with a penchant for minimalism. A study in white textures, marble, and light, creating a serene, monochromatic living experience."
+        },
+        { 
+          id: 6, 
+          title: "Kriti Healthcare", 
+          category: "Healthcare", 
+          area: "30 Rooms",
+          location: "Sector 56, Gurgaon",
+          image: "./Architectstories6.jpg",
+          description: "Function meets healing in this 30-room hospital facility. Designed for efficiency, hygiene, and patient comfort without compromising on aesthetic dignity."
+        }
       ];
 
       const FOUNDERS = [
@@ -250,7 +295,7 @@
           };
           const onMouseOver = (e) => {
             const target = e.target;
-            const interactive = target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button');
+            const interactive = target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button') || target.closest('.cursor-pointer');
             setIsHovered(!!interactive);
           };
           document.addEventListener('mousemove', onMouseMove);
@@ -303,7 +348,12 @@
           <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                 <img src="./logo.jpg" alt="PSV Logo" className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-14'} w-auto object-contain`} />
+                 {/* UPDATED LOGO: Circular and Fitted */}
+                 <img 
+                    src="./logo.jpg" 
+                    alt="PSV Logo" 
+                    className={`transition-all duration-500 rounded-full object-cover border border-white/10 ${scrolled ? 'h-12 w-12' : 'h-16 w-16'}`} 
+                 />
               </div>
               <div className="hidden md:flex items-center gap-12">
                   {['Portfolio', 'Studio', 'Services', 'Process'].map((item, i) => (
@@ -388,7 +438,7 @@
       const SignatureStrip = () => (
         <section className="bg-black py-0 border-t border-b border-neutral-800 overflow-hidden relative group z-20">
           <div className="animate-marquee flex">
-            {[...PROJECTS, ...PROJECTS, ...PROJECTS].map((project, index) => (
+            {[...PROJECTS, ...PROJECTS].map((project, index) => (
               <div key={`${project.id}-${index}`} className="relative w-[80vw] md:w-[40vw] lg:w-[25vw] h-[40vh] flex-shrink-0 border-r border-neutral-800 group/card overflow-hidden bg-neutral-950">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale opacity-60 group-hover/card:grayscale-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
@@ -511,6 +561,59 @@
         </section>
       );
 
+      // --- FLIP CARD COMPONENT FOR PORTFOLIO ---
+      const ProjectFlipCard = ({ project }) => {
+        const [flipped, setFlipped] = useState(false);
+
+        return (
+          <div 
+            className="group relative h-[450px] w-full cursor-pointer perspective-1000 mb-8 break-inside-avoid"
+            onClick={() => setFlipped(!flipped)}
+          >
+             <div className={`relative h-full w-full transition-transform duration-700 transform-style-3d ${flipped ? 'rotate-y-180' : ''}`}>
+                
+                {/* FRONT OF CARD */}
+                <div className="absolute inset-0 backface-hidden rounded-sm overflow-hidden shadow-lg">
+                   <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700" />
+                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500"></div>
+                   <div className="absolute bottom-8 left-8">
+                      <p className="text-[#D4AF37] text-[10px] tracking-[0.3em] uppercase mb-2">{project.category}</p>
+                      <h3 className="text-2xl font-serif text-white italic">{project.title}</h3>
+                      <div className="flex items-center gap-2 mt-4 text-xs text-white/70 uppercase tracking-widest">
+                         <RotateCw size={12} className={flipped ? 'hidden' : 'block animate-spin-slow'} />
+                         Click for Details
+                      </div>
+                   </div>
+                </div>
+
+                {/* BACK OF CARD */}
+                <div className="absolute inset-0 h-full w-full bg-[#111] border border-[#D4AF37]/30 rotate-y-180 backface-hidden flex flex-col items-center justify-center p-8 text-center rounded-sm shadow-xl">
+                   <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] mb-4">{project.category}</p>
+                   <h3 className="text-3xl font-serif text-white mb-2">{project.title}</h3>
+                   <div className="w-12 h-[1px] bg-white/20 my-6"></div>
+                   <p className="text-neutral-300 font-light text-sm leading-relaxed mb-8">{project.description}</p>
+                   
+                   <div className="grid grid-cols-2 gap-8 w-full border-t border-white/10 pt-6">
+                      <div>
+                        <span className="block text-[#D4AF37] text-[10px] uppercase tracking-widest mb-1">Area</span>
+                        <span className="text-white font-serif">{project.area}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[#D4AF37] text-[10px] uppercase tracking-widest mb-1">Location</span>
+                        <span className="text-white font-serif">{project.location}</span>
+                      </div>
+                   </div>
+                   
+                   <button className="absolute bottom-4 right-4 text-white/20 hover:text-[#D4AF37] transition-colors" onClick={(e) => { e.stopPropagation(); setFlipped(false); }}>
+                      <RotateCw size={16} />
+                   </button>
+                </div>
+
+             </div>
+          </div>
+        );
+      };
+
       const Portfolio = () => (
         <section className="bg-black py-32 px-6" id="portfolio">
           <div className="max-w-7xl mx-auto mb-20 flex flex-col md:flex-row justify-between items-end border-b border-neutral-900 pb-8">
@@ -518,18 +621,12 @@
                 <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium mb-4">Selected Works</p>
                 <h2 className="text-4xl md:text-6xl font-serif text-white">Architectural Stories</h2>
              </div>
-             <a href="#" className="flex items-center gap-2 text-neutral-400 hover:text-[#D4AF37] transition-colors uppercase text-xs tracking-widest mt-6 md:mt-0">View All Projects <ArrowRight size={16}/></a>
+             <p className="text-neutral-500 text-xs mt-4 md:mt-0 uppercase tracking-widest">Click images to reveal details</p>
           </div>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 max-w-7xl mx-auto space-y-8">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {PROJECTS.map((project, idx) => (
-              <div key={project.id} className="relative group break-inside-avoid overflow-hidden bg-neutral-900 mb-8 cursor-pointer">
-                <img src={project.image} alt={project.title} className="w-full h-auto object-cover opacity-70 group-hover:opacity-100 transition-all duration-700" />
-                <div className="absolute inset-0 bg-black/60 group-hover:bg-transparent transition-colors duration-500"></div>
-                <div className="absolute bottom-8 left-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-[#D4AF37] text-[10px] tracking-[0.3em] uppercase mb-2">{project.category}</p>
-                  <h3 className="text-2xl font-serif text-white italic">{project.title}</h3>
-                </div>
-              </div>
+              <ProjectFlipCard key={project.id} project={project} />
             ))}
           </div>
         </section>
@@ -545,7 +642,6 @@
                 if (!sectionRef.current) return;
                 const rect = sectionRef.current.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
-                const start = windowHeight * 0.6;
                 const end = rect.height;
                 const scrollPos = (windowHeight * 0.6) - rect.top;
                 let percentage = (scrollPos / end) * 100;
@@ -612,8 +708,8 @@
 
          return (
            <section className="bg-black py-40 px-6 relative overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-[#D4AF37]"><Quote size={400} /></div>
-              <div className="max-w-4xl mx-auto text-center relative z-10">
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-[#D4AF37]"><Quote size={400} /></div>
+             <div className="max-w-4xl mx-auto text-center relative z-10">
                  <h2 className="text-xs uppercase tracking-[0.3em] font-medium text-[#D4AF37] mb-20">Client Perspectives</h2>
                  <div className="relative h-[200px]">
                     {REVIEWS.map((review, idx) => (
@@ -626,7 +722,7 @@
                        </div>
                     ))}
                  </div>
-              </div>
+             </div>
            </section>
          );
       };
@@ -634,41 +730,41 @@
       const Contact = () => {
          const { ref, isVisible } = useScrollReveal();
          return (
-            <section className="bg-neutral-950 py-32 px-6" id="contact">
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
-                <div ref={ref} className={`transition-reveal ${isVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
-                    <h2 className="text-5xl md:text-7xl font-serif text-white mb-8">Let's Build <br/>Something <span className="text-[#D4AF37] italic">Timeless.</span></h2>
-                    <p className="text-neutral-400 font-light text-lg mb-12 max-w-md">We invite you to discuss your vision with us.</p>
-                    <div className="space-y-8 text-neutral-300 font-light">
-                        <div>
-                            <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Visit Us</span>
-                            <a href={COMPANY_DETAILS.mapLink} target="_blank" className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.location}</a>
-                        </div>
-                        <div>
-                            <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Contact</span>
-                            <div className="flex flex-col gap-1">
-                                <a href={`tel:${COMPANY_DETAILS.phone1}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone1}</a>
-                                <a href={`tel:${COMPANY_DETAILS.phone2}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone2}</a>
-                                <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-xl hover:text-[#D4AF37] transition-colors mt-2">{COMPANY_DETAILS.email}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-[#0a0a0a] p-10 md:p-16 border border-white/5 shadow-2xl">
-                    <form className="space-y-10">
-                        {['Name', 'Email Address', 'Project Type'].map((placeholder) => (
-                            <div key={placeholder} className="group relative">
-                                <input type="text" placeholder={placeholder} className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 font-light text-lg" />
-                            </div>
-                        ))}
-                        <div className="group relative">
-                            <textarea rows={4} placeholder="Tell us about your vision" className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 resize-none font-light text-lg"></textarea>
-                        </div>
-                        <Button variant="primary" className="w-full py-5 text-lg">Send Enquiry</Button>
-                    </form>
-                </div>
-              </div>
-            </section>
+           <section className="bg-neutral-950 py-32 px-6" id="contact">
+             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+               <div ref={ref} className={`transition-reveal ${isVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
+                   <h2 className="text-5xl md:text-7xl font-serif text-white mb-8">Let's Build <br/>Something <span className="text-[#D4AF37] italic">Timeless.</span></h2>
+                   <p className="text-neutral-400 font-light text-lg mb-12 max-w-md">We invite you to discuss your vision with us.</p>
+                   <div className="space-y-8 text-neutral-300 font-light">
+                       <div>
+                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Visit Us</span>
+                           <a href={COMPANY_DETAILS.mapLink} target="_blank" className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.location}</a>
+                       </div>
+                       <div>
+                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Contact</span>
+                           <div className="flex flex-col gap-1">
+                               <a href={`tel:${COMPANY_DETAILS.phone1}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone1}</a>
+                               <a href={`tel:${COMPANY_DETAILS.phone2}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone2}</a>
+                               <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-xl hover:text-[#D4AF37] transition-colors mt-2">{COMPANY_DETAILS.email}</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div className="bg-[#0a0a0a] p-10 md:p-16 border border-white/5 shadow-2xl">
+                   <form className="space-y-10">
+                       {['Name', 'Email Address', 'Project Type'].map((placeholder) => (
+                           <div key={placeholder} className="group relative">
+                               <input type="text" placeholder={placeholder} className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 font-light text-lg" />
+                           </div>
+                       ))}
+                       <div className="group relative">
+                           <textarea rows={4} placeholder="Tell us about your vision" className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 resize-none font-light text-lg"></textarea>
+                       </div>
+                       <Button variant="primary" className="w-full py-5 text-lg">Send Enquiry</Button>
+                   </form>
+               </div>
+             </div>
+           </section>
          );
       };
 
