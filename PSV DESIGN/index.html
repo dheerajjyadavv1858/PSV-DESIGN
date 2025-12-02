@@ -23,6 +23,7 @@
       body {
         cursor: none; /* Hide default cursor */
         background-color: #050505;
+        transition: background-color 0.5s ease;
       }
 
       /* --- FILM GRAIN TEXTURE (Cinematic Look) --- */
@@ -102,6 +103,34 @@
       @media (min-width: 768px) {
         body, a, button, input, textarea, select { cursor: none !important; }
       }
+
+      /* --- LIGHT MODE OVERRIDES --- */
+      /* These rules force the white theme when the 'light-mode' class is present */
+      .light-mode { background-color: #ffffff !important; color: #171717 !important; }
+      .light-mode .bg-black { background-color: #ffffff !important; }
+      .light-mode .bg-neutral-950 { background-color: #fafafa !important; }
+      .light-mode .bg-\[\#0a0a0a\] { background-color: #f5f5f5 !important; }
+      
+      /* Invert Text Colors */
+      .light-mode .text-neutral-200, .light-mode .text-white { color: #171717 !important; }
+      .light-mode .text-neutral-300 { color: #262626 !important; }
+      .light-mode .text-neutral-400 { color: #525252 !important; }
+      .light-mode .text-neutral-500 { color: #737373 !important; }
+      .light-mode .text-neutral-600 { color: #525252 !important; }
+      
+      /* Adjust Borders for Light Mode */
+      .light-mode .border-white\/5, .light-mode .border-white\/10, .light-mode .border-white\/20, .light-mode .border-neutral-800, .light-mode .border-neutral-900 { border-color: rgba(0,0,0,0.1) !important; }
+      
+      /* Adjust Background Opacities */
+      .light-mode .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
+      .light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.1) !important; }
+      
+      /* Ensure Navbar backdrop works in light mode */
+      .light-mode nav.backdrop-blur-xl { background-color: rgba(255,255,255,0.85) !important; }
+      .light-mode .animate-marquee .bg-neutral-950 { background-color: #ffffff !important; }
+      
+      /* Preserve Gold Color */
+      /* The gold (#D4AF37) remains unchanged as it looks good on white too */
     </style>
 
     <script type="importmap">
@@ -120,7 +149,7 @@
     <script type="text/babel" data-type="module">
       import React, { useState, useEffect, useRef } from 'react';
       import { createRoot } from 'react-dom/client';
-      import { ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote, ArrowRight, RotateCw, Briefcase, Camera } from 'lucide-react';
+      import { ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote, ArrowRight, RotateCw, Briefcase, Camera, Sun, Moon } from 'lucide-react';
 
       // --- DATA CONSTANTS ---
       const COMPANY_DETAILS = {
@@ -394,7 +423,8 @@
         );
       };
 
-      const Navbar = () => {
+      // --- UPDATED NAVBAR: Now accepts theme props and includes Toggle Button ---
+      const Navbar = ({ isDark, toggleTheme }) => {
         const [scrolled, setScrolled] = useState(false);
         const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
         useEffect(() => {
@@ -410,7 +440,7 @@
                  <img 
                    src="./logo.jpg" 
                    alt="PSV Logo" 
-                  className={`transition-all duration-500 rounded-full object-contain p-1 bg-black border border-white/10 ${scrolled ? 'h-20 w-20' : 'h-24 w-24'}`}
+                   className={`transition-all duration-500 rounded-2xl object-contain p-1 bg-black border border-white/10 ${scrolled ? 'h-20 w-20' : 'h-24 w-24'}`}
                  />
               </div>
               <div className="hidden md:flex items-center gap-12">
@@ -425,8 +455,17 @@
                       </a>
                   ))}
               </div>
-              <div className="hidden md:block">
+              <div className="hidden md:flex items-center gap-6">
                   <a href="#contact"><Button variant={scrolled ? 'primary' : 'outline'} className="text-xs py-2 px-6">Enquire</Button></a>
+                  
+                  {/* --- NEW THEME TOGGLE BUTTON --- */}
+                  <button 
+                    onClick={toggleTheme} 
+                    className="p-3 rounded-full border border-white/10 hover:border-[#D4AF37] hover:text-[#D4AF37] text-neutral-300 transition-all duration-300"
+                    aria-label="Toggle Theme"
+                  >
+                    {isDark ? <Moon size={18} /> : <Sun size={18} />}
+                  </button>
               </div>
               <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen ? <X /> : <Menu />}</button>
             </div>
@@ -437,6 +476,12 @@
                   {['Portfolio', 'Studio', 'Services', 'Process', 'Contact'].map((item) => (
                       <a key={item} href={`#${item.toLowerCase()}`} className="text-3xl font-serif text-white hover:text-[#D4AF37] transition-colors" onClick={() => setMobileMenuOpen(false)}>{item}</a>
                   ))}
+                   <button 
+                    onClick={() => { toggleTheme(); setMobileMenuOpen(false); }}
+                    className="flex items-center gap-2 text-xl font-serif text-white hover:text-[#D4AF37] transition-colors"
+                  >
+                    {isDark ? <Moon size={24} /> : <Sun size={24} />} {isDark ? "Dark Mode" : "Light Mode"}
+                  </button>
               </div>
             )}
           </nav>
@@ -867,13 +912,30 @@
         );
       };
 
+      // --- UPDATED APP COMPONENT: Manages Theme State ---
       const App = () => {
-        useEffect(() => { document.documentElement.style.scrollBehavior = 'smooth'; }, []);
+        const [isDark, setIsDark] = useState(true);
+
+        useEffect(() => { 
+            document.documentElement.style.scrollBehavior = 'smooth'; 
+        }, []);
+
+        // Toggle function to switch class on BODY
+        const toggleTheme = () => {
+            setIsDark(!isDark);
+            if (isDark) {
+                document.body.classList.add('light-mode');
+            } else {
+                document.body.classList.remove('light-mode');
+            }
+        };
+
         return (
           <div className="min-h-screen bg-black text-neutral-200 overflow-x-hidden selection:bg-[#D4AF37] selection:text-black">
             <div className="bg-grain"></div>
             <CustomCursor />
-            <Navbar />
+            {/* Pass theme props to Navbar */}
+            <Navbar isDark={isDark} toggleTheme={toggleTheme} />
             <Hero />
             <SignatureStrip />
             <About />
@@ -895,5 +957,3 @@
 
 
 </html>
-
-
