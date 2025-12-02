@@ -23,7 +23,7 @@
       body {
         cursor: none; /* Hide default cursor */
         background-color: #050505;
-        transition: background-color 0.5s ease;
+        transition: background-color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.8s ease;
       }
 
       /* --- FILM GRAIN TEXTURE (Cinematic Look) --- */
@@ -104,33 +104,91 @@
         body, a, button, input, textarea, select { cursor: none !important; }
       }
 
-      /* --- LIGHT MODE OVERRIDES --- */
-      /* These rules force the white theme when the 'light-mode' class is present */
-      .light-mode { background-color: #ffffff !important; color: #171717 !important; }
-      .light-mode .bg-black { background-color: #ffffff !important; }
-      .light-mode .bg-neutral-950 { background-color: #fafafa !important; }
-      .light-mode .bg-\[\#0a0a0a\] { background-color: #f5f5f5 !important; }
+      /* =========================================
+         PREMIUM LIGHT MODE STYLING (IMPROVED)
+         ========================================= */
       
-      /* Invert Text Colors */
-      .light-mode .text-neutral-200, .light-mode .text-white { color: #171717 !important; }
-      .light-mode .text-neutral-300 { color: #262626 !important; }
-      .light-mode .text-neutral-400 { color: #525252 !important; }
-      .light-mode .text-neutral-500 { color: #737373 !important; }
-      .light-mode .text-neutral-600 { color: #525252 !important; }
+      /* Base Backgrounds - Warm Luxury White instead of Grey */
+      .light-mode { background-color: #FDFBF7 !important; color: #1a1a1a !important; }
+      .light-mode .bg-black { background-color: #FDFBF7 !important; }
+      .light-mode .bg-neutral-950 { background-color: #F8F5F0 !important; }
+      .light-mode .bg-\[\#0a0a0a\] { background-color: #FDFBF7 !important; }
       
-      /* Adjust Borders for Light Mode */
-      .light-mode .border-white\/5, .light-mode .border-white\/10, .light-mode .border-white\/20, .light-mode .border-neutral-800, .light-mode .border-neutral-900 { border-color: rgba(0,0,0,0.1) !important; }
+      /* Reduce Grain in Light Mode (Clean Look) */
+      .light-mode .bg-grain { opacity: 0.015 !important; }
+
+      /* Text Colors - Deep Charcoal for readability */
+      .light-mode .text-neutral-200, 
+      .light-mode .text-white { color: #1a1a1a !important; }
+      .light-mode .text-neutral-300 { color: #333333 !important; }
+      .light-mode .text-neutral-400 { color: #555555 !important; }
+      .light-mode .text-neutral-500 { color: #777777 !important; }
       
-      /* Adjust Background Opacities */
-      .light-mode .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
-      .light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.1) !important; }
+      /* SERVICES & CARDS - The "Box" fix */
+      /* Instead of grey boxes, use White Boxes with Drop Shadow for 3D effect */
+      .light-mode .bg-neutral-900\/20, 
+      .light-mode .bg-white\/\[0\.02\],
+      .light-mode .bg-neutral-900 { 
+          background-color: #FFFFFF !important; 
+          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08) !important;
+          border: 1px solid rgba(212, 175, 55, 0.15) !important;
+      }
+
+      /* Hover Effects in Light Mode */
+      .light-mode .group:hover .bg-neutral-900\/20 {
+          background-color: #FFFFFF !important;
+          box-shadow: 0 20px 50px -10px rgba(212, 175, 55, 0.15) !important;
+          transform: translateY(-5px);
+      }
+
+      /* Navbar - Glassmorphism White */
+      .light-mode nav.backdrop-blur-xl { 
+          background-color: rgba(255, 255, 255, 0.85) !important; 
+          border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+      }
       
-      /* Ensure Navbar backdrop works in light mode */
-      .light-mode nav.backdrop-blur-xl { background-color: rgba(255,255,255,0.85) !important; }
-      .light-mode .animate-marquee .bg-neutral-950 { background-color: #ffffff !important; }
+      /* Contact Form Inputs in Light Mode */
+      .light-mode input, .light-mode textarea {
+          color: #000000 !important;
+          border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+      }
+      .light-mode input::placeholder, .light-mode textarea::placeholder {
+          color: #888888 !important;
+      }
+      .light-mode input:focus, .light-mode textarea:focus {
+          border-bottom: 1px solid #D4AF37 !important;
+      }
+
+      /* Buttons in Light Mode */
+      .light-mode button.border-white\/20 {
+          border-color: rgba(0,0,0,0.2) !important;
+          color: #000 !important;
+      }
+      .light-mode button.border-white\/20:hover {
+          border-color: #D4AF37 !important;
+          background-color: transparent !important;
+          color: #D4AF37 !important;
+      }
+
+      /* Marquee Images in Light Mode - Remove grayscale to make them pop */
+      .light-mode .animate-marquee img {
+          filter: grayscale(0%) !important;
+          opacity: 0.9 !important;
+      }
+      .light-mode .animate-marquee .bg-neutral-950 {
+          background-color: #FFFFFF !important;
+          border-right: 1px solid rgba(0,0,0,0.05) !important;
+      }
+
+      /* HERO TEXT EXCEPTION: Keep Hero text white because image is dark */
+      .light-mode section.h-screen h1, 
+      .light-mode section.h-screen p,
+      .light-mode section.h-screen span {
+          color: #ffffff !important;
+      }
+      /* Keep Gold Gold */
+      .light-mode .text-\[\#D4AF37\] { color: #D4AF37 !important; }
       
-      /* Preserve Gold Color */
-      /* The gold (#D4AF37) remains unchanged as it looks good on white too */
     </style>
 
     <script type="importmap">
