@@ -105,89 +105,95 @@
       }
 
       /* =========================================
-         PREMIUM LIGHT MODE STYLING (IMPROVED)
+         ULTRA-PREMIUM LIGHT MODE STYLING
          ========================================= */
       
-      /* Base Backgrounds - Warm Luxury White instead of Grey */
-      .light-mode { background-color: #FDFBF7 !important; color: #1a1a1a !important; }
-      .light-mode .bg-black { background-color: #FDFBF7 !important; }
-      .light-mode .bg-neutral-950 { background-color: #F8F5F0 !important; }
-      .light-mode .bg-\[\#0a0a0a\] { background-color: #FDFBF7 !important; }
+      /* Backgrounds - Warm Creamy White */
+      .light-mode { background-color: #FFFCF7 !important; color: #1C1C1C !important; }
+      .light-mode .bg-black { background-color: #FFFCF7 !important; }
+      .light-mode .bg-neutral-950 { background-color: #F9F7F2 !important; }
+      .light-mode .bg-\[\#0a0a0a\] { background-color: #FFFFFF !important; }
       
-      /* Reduce Grain in Light Mode (Clean Look) */
-      .light-mode .bg-grain { opacity: 0.015 !important; }
+      /* Grain Opacity - Very Subtle */
+      .light-mode .bg-grain { opacity: 0.02 !important; }
 
-      /* Text Colors - Deep Charcoal for readability */
+      /* TYPOGRAPHY COLORS - Richer, Darker Grey (Not pure black) */
       .light-mode .text-neutral-200, 
-      .light-mode .text-white { color: #1a1a1a !important; }
-      .light-mode .text-neutral-300 { color: #333333 !important; }
-      .light-mode .text-neutral-400 { color: #555555 !important; }
-      .light-mode .text-neutral-500 { color: #777777 !important; }
+      .light-mode .text-white { color: #111111 !important; } /* Nearly black for headings */
       
-      /* SERVICES & CARDS - The "Box" fix */
-      /* Instead of grey boxes, use White Boxes with Drop Shadow for 3D effect */
+      .light-mode .text-neutral-300 { color: #333333 !important; } /* Dark Grey for body */
+      .light-mode .text-neutral-400 { color: #4A4A4A !important; } /* Medium Grey */
+      .light-mode .text-neutral-500 { color: #666666 !important; } /* Light Grey */
+      
+      /* GOLD ACCENT TUNING FOR LIGHT MODE - Darker, Metallic Gold */
+      .light-mode .text-\[\#D4AF37\], 
+      .light-mode .text-\[\#F2B544\] { 
+          color: #B8860B !important; /* Dark Goldenrod - Pops better on white */
+          font-weight: 500 !important;
+      }
+      .light-mode .border-\[\#D4AF37\] { border-color: #B8860B !important; }
+      .light-mode .bg-\[\#D4AF37\] { background-color: #B8860B !important; }
+
+      /* CARDS & CONTAINERS - Elegant White with Depth */
       .light-mode .bg-neutral-900\/20, 
       .light-mode .bg-white\/\[0\.02\],
       .light-mode .bg-neutral-900 { 
           background-color: #FFFFFF !important; 
-          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08) !important;
-          border: 1px solid rgba(212, 175, 55, 0.15) !important;
+          box-shadow: 0 15px 40px -10px rgba(184, 134, 11, 0.08) !important; /* Golden tint shadow */
+          border: 1px solid rgba(184, 134, 11, 0.1) !important;
       }
 
-      /* Hover Effects in Light Mode */
+      /* Card Hover */
       .light-mode .group:hover .bg-neutral-900\/20 {
-          background-color: #FFFFFF !important;
-          box-shadow: 0 20px 50px -10px rgba(212, 175, 55, 0.15) !important;
-          transform: translateY(-5px);
+          box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.15) !important;
+          border-color: rgba(184, 134, 11, 0.3) !important;
       }
 
-      /* Navbar - Glassmorphism White */
+      /* Borders */
+      .light-mode .border-white\/5, 
+      .light-mode .border-white\/10, 
+      .light-mode .border-white\/20, 
+      .light-mode .border-neutral-800, 
+      .light-mode .border-neutral-900 { 
+          border-color: rgba(0,0,0,0.06) !important; 
+      }
+
+      /* Navbar */
       .light-mode nav.backdrop-blur-xl { 
-          background-color: rgba(255, 255, 255, 0.85) !important; 
-          border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+          background-color: rgba(255, 252, 247, 0.9) !important; 
+          border-bottom: 1px solid rgba(184, 134, 11, 0.1) !important;
       }
       
-      /* Contact Form Inputs in Light Mode */
+      /* Forms */
       .light-mode input, .light-mode textarea {
           color: #000000 !important;
-          border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+          border-bottom: 1px solid #D1D1D1 !important;
+          background: transparent !important;
+      }
+      .light-mode input:focus, .light-mode textarea:focus {
+          border-bottom: 1px solid #B8860B !important;
       }
       .light-mode input::placeholder, .light-mode textarea::placeholder {
           color: #888888 !important;
       }
-      .light-mode input:focus, .light-mode textarea:focus {
-          border-bottom: 1px solid #D4AF37 !important;
-      }
 
-      /* Buttons in Light Mode */
-      .light-mode button.border-white\/20 {
-          border-color: rgba(0,0,0,0.2) !important;
-          color: #000 !important;
-      }
-      .light-mode button.border-white\/20:hover {
-          border-color: #D4AF37 !important;
-          background-color: transparent !important;
-          color: #D4AF37 !important;
-      }
-
-      /* Marquee Images in Light Mode - Remove grayscale to make them pop */
+      /* Marquee Images */
       .light-mode .animate-marquee img {
           filter: grayscale(0%) !important;
-          opacity: 0.9 !important;
+          opacity: 1 !important;
       }
       .light-mode .animate-marquee .bg-neutral-950 {
           background-color: #FFFFFF !important;
-          border-right: 1px solid rgba(0,0,0,0.05) !important;
+          border-right: 1px solid #f0f0f0 !important;
       }
 
-      /* HERO TEXT EXCEPTION: Keep Hero text white because image is dark */
+      /* Hero Text Exception - Keep White on Image */
       .light-mode section.h-screen h1, 
       .light-mode section.h-screen p,
-      .light-mode section.h-screen span {
+      .light-mode section.h-screen span:not(.text-\[\#D4AF37\]) {
           color: #ffffff !important;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.3);
       }
-      /* Keep Gold Gold */
-      .light-mode .text-\[\#D4AF37\] { color: #D4AF37 !important; }
       
     </style>
 
@@ -222,7 +228,7 @@
         mapLink: "https://maps.app.goo.gl/78EoepFPZvfKTS3P6?g_st=ipc"
       };
 
-      // --- IMAGE DATA FOR EXPERTISE GALLERIES (Based on provided screenshots) ---
+      // --- IMAGE DATA FOR EXPERTISE GALLERIES ---
       const GALLERY_DATA = {
           ARCHITECTURE: [
               "./ARCHITECTURE/1.jpg",
@@ -252,7 +258,6 @@
                "./GREEN BUILDING/WhatsApp Image 2025-05-10 at 14.34.45 (1).jpeg"
           ],
           LANDSCAPE: [
-              // Placeholder names as the screenshot didn't show filenames clearly. Please ensure these exist.
               "./LANDSDCAPE/1.jpg", 
               "./LANDSDCAPE/2.jpg", 
               "./LANDSDCAPE/3.jpg"
