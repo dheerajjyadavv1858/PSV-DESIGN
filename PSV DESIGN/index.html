@@ -226,8 +226,8 @@
         name: "PSV DESIGN N BUILD",
         tagline: "Building with Art, Designing with Soul.",
         email: "psvdzyns@gmail.com",
-        phone1: "+91 9220501357", // ADDED +91
-        phone2: "+91 9667523157", // ADDED +91
+        phone1: "+91 9220501357", 
+        phone2: "+91 9667523157", 
         location: "7th Floor, Emerald Plaza, 708, Golf Course Ext Rd, Sector 65, Gurugram, Haryana 122101",
         instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
         facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
@@ -263,7 +263,7 @@
                "./GREEN BUILDING/WhatsApp Image 2025-03-10 at 07.51.10.jpeg",
                "./GREEN BUILDING/WhatsApp Image 2025-05-10 at 14.34.45 (1).jpeg"
           ],
-          // UPDATED LANDSCAPE DATA FROM SCREENSHOT - CORRECT FOLDER NAME "LANDSDCAPE"
+          // LANDSCAPE DATA
           LANDSCAPE: [
               "./LANDSDCAPE/8.jpg", 
               "./LANDSDCAPE/IMG-20251121-WA0038.jpg", 
@@ -307,8 +307,8 @@
         { id: 2, title: "Amrit Residency", category: "Hospitality", image: "./Architectstories2.jpg" },
         { id: 3, title: "Royal Tijara Estate", category: "Gated Community", image: "./Architectstories3.jpg" },
         { id: 4, title: "The Royal Tijara Estate, Club House", category: "Fine Dining", image: "./Architectstories4.jpg" },
-        { id: 5, title: "Nirmal Villa", category: "Luxury Interiors", image: "./Architectstories5.jpg" }, // CHANGED NAME
-        { id: 6, title: "Mohak Kriti Hospital", category: "Healthcare", image: "./Architectstories6.jpg" } // CHANGED NAME
+        { id: 5, title: "Nirmal Villa", category: "Luxury Interiors", image: "./Architectstories5.jpg" }, 
+        { id: 6, title: "Mohak Kriti Hospital", category: "Healthcare", image: "./Architectstories6.jpg" } 
       ];
 
       // --- PORTFOLIO PROJECTS ---
@@ -333,7 +333,7 @@
         },
         { 
           id: 3, 
-          title: "Mohak Kriti Hospital", // CHANGED NAME
+          title: "Mohak Kriti Hospital", 
           category: "Healthcare", 
           area: "30 Rooms",
           location: "Sector 56",
@@ -766,7 +766,7 @@
         </section>
       );
       
-      // --- NEW TEAM SECTION COMPONENT WITH ANIMATIONS & CAROUSEL ---
+      // --- NEW TEAM SECTION COMPONENT WITH BLUR EFFECT & CAROUSEL ---
       const TeamSection = () => {
           const [activeTab, setActiveTab] = useState('office'); // 'office' or 'execution'
           const [currentExecutionIndex, setCurrentExecutionIndex] = useState(0);
@@ -778,7 +778,7 @@
                 setCurrentExecutionIndex((prevIndex) => 
                     (prevIndex + 1) % TEAM_DATA.EXECUTION.length
                 );
-            }, 3000); // Change image every 3 seconds
+            }, 3000); 
             return () => clearInterval(interval);
           }, [activeTab]);
 
@@ -829,21 +829,32 @@
                     {/* CONTENT AREA */}
                     <div className="min-h-[600px] relative">
                         
-                        {/* === OFFICE TEAM CONTENT (Horizontal Single Photo - FIXED ZOOM ISSUE) === */}
+                        {/* === OFFICE TEAM CONTENT (Fix: Blur Background + Full Image) === */}
                         <div className={`transition-opacity duration-700 ease-in-out absolute inset-0
                             ${activeTab === 'office' ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}>
                              {TEAM_DATA.OFFICE.map((img, idx) => (
-                                <div key={`office-${idx}`} className="group relative overflow-hidden rounded-lg border border-white/10 shadow-2xl h-[600px] w-full bg-neutral-900/50">
+                                <div key={`office-${idx}`} className="group relative overflow-hidden rounded-lg border border-white/10 shadow-2xl h-[600px] w-full bg-neutral-900">
+                                   
+                                   {/* LAYER 1: Blurred Background (Fills the box) */}
+                                   <div className="absolute inset-0 z-0">
+                                       <img 
+                                         src={img} 
+                                         alt="" 
+                                         className="w-full h-full object-cover blur-xl opacity-40 scale-110" 
+                                       />
+                                   </div>
+
+                                   {/* LAYER 2: Main Image (Shows full vertical photo without cropping) */}
                                    <img 
                                      src={img} 
                                      alt="Office Team" 
-                                     // CHANGED object-cover TO object-contain TO FIX ZOOM ISSUE
-                                     className="w-full h-full object-contain grayscale-[30%] group-hover:grayscale-0 transition-all duration-1000"
+                                     className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
                                      onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Office+Team+Photo';}}
                                    />
-                                   {/* Adjusted gradient to not cover centered image */}
-                                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80 pointer-events-none"></div>
-                                   <div className="absolute bottom-0 left-0 p-10 select-none pointer-events-none">
+                                   
+                                   {/* Text Overlay */}
+                                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 z-20"></div>
+                                   <div className="absolute bottom-0 left-0 p-10 select-none z-30">
                                        <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">Design & Management</span>
                                        <h3 className="text-3xl font-serif text-white">The Minds Behind The Vision.</h3>
                                    </div>
