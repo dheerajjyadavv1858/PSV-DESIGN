@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PSV DESIGN N BUILD | Ultra-Luxury Architecture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      /* --- CUSTOM SCROLLBAR --- */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: #050505; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+      
+      body {
+        cursor: none; /* Hide default cursor */
+        background-color: #050505;
+        transition: background-color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.8s ease;
+      }
+
+      /* --- FILM GRAIN TEXTURE (Cinematic Look) --- */
+      .bg-grain {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* --- ANIMATIONS --- */
+      .transition-reveal {
+        transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      
+      .reveal-hidden { opacity: 0; transform: translateY(60px) scale(0.98); filter: blur(10px); }
+      .reveal-visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+
+      /* Stagger Delays */
+      .delay-100 { transition-delay: 100ms; }
+      .delay-200 { transition-delay: 200ms; }
+      .delay-300 { transition-delay: 300ms; }
+      .delay-400 { transition-delay: 400ms; }
+      .delay-500 { transition-delay: 500ms; }
+      .delay-700 { transition-delay: 700ms; }
+
+      /* Marquee */
+      @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      .animate-marquee { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+      .animate-marquee:hover { animation-play-state: paused; }
+
+      /* Blobs & Shine */
+      @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.2); }
+        66% { transform: translate(-20px, 20px) scale(0.8); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+      .animate-blob { animation: blob 15s infinite ease-in-out; }
+      
+      @keyframes shine { 
+        0% { left: -100%; opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { left: 200%; opacity: 0; } 
+      }
+      .group:hover .animate-shine { animation: shine 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+
+      /* --- 3D FLIP CARD STYLES --- */
+      .perspective-1000 { perspective: 1000px; }
+      .transform-style-3d { transform-style: preserve-3d; }
+      .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+      .rotate-y-180 { transform: rotateY(180deg); }
+
+      /* Hover underline */
+      .hover-underline {
+        position: relative;
+      }
+      .hover-underline::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: #D4AF37;
+        transform-origin: bottom right;
+        transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+      }
+      .hover-underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      @media (min-width: 768px) {
+        body, a, button, input, textarea, select { cursor: none !important; }
+      }
+
+      /* =========================================
+         ULTRA-PREMIUM LIGHT MODE STYLING (TEXTURED)
+         ========================================= */
+      
+      /* Backgrounds - Warm Creamy White with Paper Texture feel */
+      .light-mode { 
+          background-color: #FDFBF7 !important; 
+          color: #1C1C1C !important; 
+          /* Subtle dot pattern for texture */
+          background-image: radial-gradient(#9965151a 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+      }
+      
+      /* Light Mode Section Overrides */
+      .light-mode .bg-black { background-color: #FDFBF7 !important; }
+      .light-mode .bg-neutral-950 { background-color: #F5F2EB !important; border-top: 1px solid #e5e5e5; }
+      .light-mode .bg-[#0a0a0a] { background-color: #FFFFFF !important; }
+      
+      /* Textures - Increased Grain for "Paper" Feel in Light Mode */
+      .light-mode .bg-grain { opacity: 0.12 !important; mix-blend-mode: multiply; }
+
+      /* TYPOGRAPHY COLORS */
+      .light-mode .text-neutral-200, 
+      .light-mode .text-white { color: #050505 !important; } /* Deep black for contrast */
+      
+      .light-mode .text-neutral-300 { color: #333333 !important; } 
+      .light-mode .text-neutral-400 { color: #555555 !important; } 
+      .light-mode .text-neutral-500 { color: #666666 !important; }
+      .light-mode .text-neutral-600 { color: #444444 !important; }
+      
+      /* GOLD ACCENT TUNING FOR LIGHT MODE - DARKER & RICHER */
+      .light-mode .text-[#D4AF37], 
+      .light-mode .text-[#F2B544] { 
+          color: #996515 !important; /* Deep Metallic Gold/Bronze for visibility on white */
+          font-weight: 600 !important;
+      }
+      .light-mode .border-[#D4AF37] { border-color: #996515 !important; }
+      .light-mode .bg-[#D4AF37] { background-color: #996515 !important; }
+      
+      /* Fix for buttons in light mode */
+      .light-mode button.text-[#D4AF37] { color: #996515 !important; }
+      .light-mode button.border-[#D4AF37] { border-color: #996515 !important; }
+      .light-mode .hover\:bg-\[\#D4AF37\]:hover { background-color: #996515 !important; color: white !important; }
+
+      /* CARDS & CONTAINERS */
+      .light-mode .bg-neutral-900\/20, 
+      .light-mode .bg-white\/\[0\.02\],
+      .light-mode .bg-neutral-900 { 
+          background-color: #FFFFFF !important; 
+          box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+          border: 1px solid rgba(153, 101, 21, 0.1) !important;
+      }
+
+      /* Card Hover */
+      .light-mode .group:hover .bg-neutral-900\/20 {
+          box-shadow: 0 15px 30px rgba(153, 101, 21, 0.08) !important;
+          border-color: rgba(153, 101, 21, 0.3) !important;
+      }
+
+      /* Borders */
+      .light-mode .border-white\/5, 
+      .light-mode .border-white\/10, 
+      .light-mode .border-white\/20, 
+      .light-mode .border-neutral-800, 
+      .light-mode .border-neutral-900 { 
+          border-color: rgba(0,0,0,0.06) !important; 
+      }
+
+      /* Navbar */
+      .light-mode nav.backdrop-blur-xl { 
+          background-color: rgba(253, 251, 247, 0.95) !important; 
+          border-bottom: 1px solid rgba(153, 101, 21, 0.1) !important;
+      }
+
+      /* --- LOGO FIX FOR LIGHT MODE --- */
+      /* Keeps the logo container black/dark with a gold border so the logo pops */
+      .light-mode .logo-container {
+        background-color: #050505 !important;
+        border: 1px solid #996515 !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+      
+      /* Forms */
+      .light-mode input, .light-mode textarea {
+          color: #000000 !important;
+          border-bottom: 1px solid #aaa !important;
+          background: transparent !important;
+      }
+      .light-mode input:focus, .light-mode textarea:focus {
+          border-bottom: 1px solid #996515 !important;
+      }
+      .light-mode input::placeholder, .light-mode textarea::placeholder {
+          color: #777 !important;
+      }
+
+      /* Marquee Images */
+      .light-mode .animate-marquee img {
+          filter: grayscale(0%) !important;
+          opacity: 1 !important;
+      }
+      .light-mode .animate-marquee .bg-neutral-950 {
+          background-color: #FFFFFF !important;
+          border-right: 1px solid #eee !important;
+      }
+
+      /* Hero Text Exception - Keep White on Image */
+      .light-mode section.h-screen h1, 
+      .light-mode section.h-screen p,
+      .light-mode section.h-screen span:not(.text-[#D4AF37]) {
+          color: #ffffff !important;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+
+      /* Specific Text Color Fix for Light Mode */
+      .light-mode .text-white { color: #1C1C1C !important; }
+      .light-mode .text-neutral-300 { color: #333333 !important; }
+      .light-mode .text-neutral-400 { color: #555555 !important; }
+
+    </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-black text-neutral-200 font-sans antialiased overflow-x-hidden selection:bg-[#D4AF37] selection:text-black">
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+      import React, { useState, useEffect, useRef } from 'react';
+      import { createRoot } from 'react-dom/client';
+      import { ArrowDown, Ruler, Building, Leaf, Home, Grid, PenTool, Instagram, Linkedin, Facebook, Menu, X, Lightbulb, Star, Quote, ArrowRight, RotateCw, Briefcase, Camera, Sun, Moon, Users, HardHat } from 'lucide-react';
+
+      // --- DATA CONSTANTS ---
+      const COMPANY_DETAILS = {
+        name: "PSV DESIGN N BUILD",
+        tagline: "Building with Art, Designing with Soul.",
+        email: "psvdzyns@gmail.com",
+        phone1: "+91 9220501357", 
+        phone2: "+91 9667523157", 
+        location: "7th Floor, Emerald Plaza, 708, Golf Course Ext Rd, Sector 65, Gurugram, Haryana 122101",
+        instagram: "https://www.instagram.com/psv.designs?igsh=MTRjcnZjaWEwOGU5dw%3D%3D&utm_source=qr",
+        facebook: "https://www.facebook.com/share/17bgpjFSk7/?mibextid=wwXIfr",
+        mapLink: "https://maps.app.goo.gl/78EoepFPZvfKTS3P6?g_st=ipc"
+      };
+
+      // --- IMAGE DATA FOR EXPERTISE GALLERIES ---
+      const GALLERY_DATA = {
+          ARCHITECTURE: [
+              "./ARCHITECTURE/1.jpg",
+              "./ARCHITECTURE/2a.jpg",
+              "./ARCHITECTURE/Cam_01.jpg",
+              "./ARCHITECTURE/Cam_02.jpg",
+              "./ARCHITECTURE/Cam_03.jpg",
+              "./ARCHITECTURE/Gate_01_HR.jpg",
+              "./ARCHITECTURE/TOP2.jpg"
+          ],
+          URBAN_PLANNING: [
+              "./URBAN PLANNING/WhatsApp Image 2025-02-21 at 08.54.40.jpeg",
+              "./URBAN PLANNING/WhatsApp Image 2025-11-26 at 12.40.05_e961621a.jpg"
+          ],
+          INTERIORS: [
+              "./INTERIORS/1.jpeg",
+              "./INTERIORS/ent foyer1.jpg",
+              "./INTERIORS/rest.jpg",
+              "./INTERIORS/WhatsApp Image 2021-10-19 at 5.22.09 AM.jpeg",
+              "./INTERIORS/WhatsApp Image 2024-12-23 at 23.22.27.jpeg",
+              "./INTERIORS/WhatsApp Image 2025-01-08 at 21.57.20 (1).jpeg"
+          ],
+          GREEN_BUILDING: [
+               "./GREEN BUILDING/WhatsApp Image 2025-02-21 at 08.54.40 (1).jpeg",
+               "./GREEN BUILDING/WhatsApp Image 2025-02-21 at 08.54.40.jpeg",
+               "./GREEN BUILDING/WhatsApp Image 2025-03-10 at 07.51.10.jpeg",
+               "./GREEN BUILDING/WhatsApp Image 2025-05-10 at 14.34.45 (1).jpeg"
+          ],
+          // LANDSCAPE DATA - FIXED ZOOM ISSUE (SHOW ORIGINAL)
+          LANDSCAPE: [
+              "./LANDSDCAPE/8.jpg", 
+              "./LANDSDCAPE/IMG-20251121-WA0038.jpg", 
+              "./LANDSDCAPE/IMG-20251126-WA0029.jpg",
+              "./LANDSDCAPE/IMG-20251126-WA0032.jpg",
+              "./LANDSDCAPE/WhatsApp Image 2025-11-26 at 15.38.02_f2321edc.jpg",
+              "./LANDSDCAPE/WhatsApp Image 2025-11-26 at 15.38.03_dd71b325.jpg"
+          ],
+          COMMERCIAL_PMC: [
+              "./COMMERCIAL & PMC/commercial1.jpg",
+              "./COMMERCIAL & PMC/commercial2.jpg",
+              "./COMMERCIAL & PMC/commercial3.jpg"
+          ]
+      };
+      
+      // --- TEAM DATA ---
+      const TEAM_DATA = {
+          OFFICE: [
+              "./TEAM/office1.jpg"
+          ],
+          EXECUTION: [
+              "./TEAM/construction1.jpg",
+              "./TEAM/construction2.jpg",
+              "./TEAM/construction3.jpg"
+          ]
+      };
+
+      // --- SERVICES DATA LINKED TO GALLERY DATA ---
+      const SERVICES = [
+        { id: 1, title: "Architecture", description: "Form follows fiction. Structures that define skylines.", icon: <Building className="w-6 h-6" />, galleryImages: GALLERY_DATA.ARCHITECTURE },
+        { id: 2, title: "Urban Planning", description: "Masterpieces of community and connectivity.", icon: <Grid className="w-6 h-6" />, galleryImages: GALLERY_DATA.URBAN_PLANNING },
+        { id: 3, title: "Interiors", description: "Curated environments of whispered luxury.", icon: <Home className="w-6 h-6" />, galleryImages: GALLERY_DATA.INTERIORS },
+        { id: 4, title: "Green Buildings", description: "Sustainable luxury in harmony with nature.", icon: <Leaf className="w-6 h-6" />, galleryImages: GALLERY_DATA.GREEN_BUILDING },
+        { id: 5, title: "Landscape", description: "Sculpting the earth to frame the art.", icon: <Ruler className="w-6 h-6" />, galleryImages: GALLERY_DATA.LANDSCAPE },
+        { id: 6, title: "Commercial & PMC", description: "Strategic spaces and precision management.", icon: <Briefcase className="w-6 h-6" />, galleryImages: GALLERY_DATA.COMMERCIAL_PMC }
+      ];
+
+      // --- DATA FOR TOP MARQUEE ---
+      const MARQUEE_PROJECTS = [
+        { id: 1, title: "The Jain Residence", category: "Boutique Residence", image: "./Architectstories1.jpg" },
+        { id: 2, title: "Amrit Residency", category: "Hospitality", image: "./Architectstories2.jpg" },
+        { id: 3, title: "Royal Tijara Estate", category: "Gated Community", image: "./Architectstories3.jpg" },
+        { id: 4, title: "The Royal Tijara Estate, Club House", category: "Fine Dining", image: "./Architectstories4.jpg" },
+        { id: 5, title: "Nirmal Villa", category: "Luxury Interiors", image: "./Architectstories5.jpg" }, 
+        { id: 6, title: "Mohak Kriti Hospital", category: "Healthcare", image: "./Architectstories6.jpg" } 
+      ];
+
+      // --- PORTFOLIO PROJECTS ---
+      const PORTFOLIO_PROJECTS = [
+        { 
+          id: 1, 
+          title: "Royal Estate Farmland Community",
+          category: "Gated Community", 
+          area: "50 Acres",
+          location: "Outskirts",
+          image: "./Architectstories3.jpg",
+          description: "A royal gated farmhouse community spread across 50 acres. This master plan integrates state-of-the-art facilities with untouched landscape."
+        },
+        { 
+          id: 2, 
+          title: "Urban Oasis",
+          category: "Boutique Residence", 
+          area: "500 Sq. Yd.",
+          location: "Gurgaon",
+          image: "./Architectstories1.jpg",
+          description: "A 500 sq.yd. architectural masterpiece. This boutique residence balances privacy with openness, featuring light wells that pierce through the structure."
+        },
+        { 
+          id: 3, 
+          title: "Mohak Kriti Hospital", 
+          category: "Healthcare", 
+          area: "30 Rooms",
+          location: "Sector 56",
+          image: "./Architectstories6.jpg",
+          description: "Function meets healing in this 30-room hospital facility. Designed for efficiency, hygiene, and patient comfort without compromising on aesthetic dignity."
+        },
+        { 
+          id: 4, 
+          title: "Fine Dining",
+          category: "Hospitality", 
+          area: "Farm Lands",
+          location: "Rajasthan",
+          image: "./Architectstories4.jpg",
+          description: "An exquisite fine dining restaurant nestled in Tijara Farm Lands. The design blurs the line between the built environment and the organic farm setting."
+        }
+      ];
+
+      const FOUNDERS = [
+        {
+          name: "Ar. Panckaj Jyoti",
+          role: "Principal Architect",
+          description: "With over two decades of transforming skylines, Panckaj believes that architecture is frozen music. His vision bridges the gap between raw structural integrity and poetic fluid forms.",
+          image: "./pankaj.jpg" 
+        },
+        {
+          name: "Mr. Viekas Sahdev",
+          role: "Principal Consultant | Real Estate",
+          description: "A visionary in spatial experience, Viekas ensures that every design narrates a story. He balances the artistic direction with strategic execution, ensuring timeless relevance.",
+          image: "./vivek.jpg"
+        }
+      ];
+
+      const REVIEWS = [
+        { id: 1, client: "Rajesh K.", project: "Sector 42 Villa", quote: "They didn't just build a house; they crafted a legacy for my family. The attention to detail is absolute perfection." },
+        { id: 2, client: "Anjali S.", project: "Corporate HQ", quote: "PSV understands that luxury is felt, not just seen. Our office is now a landmark in Gurgaon." },
+        { id: 3, client: "Vikram M.", project: "Penthouse Interior", quote: "Seamless execution. The gold accents and dark tones were balanced with such artistic restraint." }
+      ];
+
+      const LEGAL_CONTENT = {
+        PRIVACY: `<h3 class="text-xl font-serif text-[#D4AF37] mb-4">1. Information We Collect</h3><p class="mb-4">At PSV DESIGN N BUILD, we value your privacy.</p>`,
+        TERMS: `<h3 class="text-xl font-serif text-[#D4AF37] mb-4">1. Introduction</h3><p class="mb-6">Welcome to PSV DESIGN N BUILD.</p>`
+      };
+
+      // --- COMPONENTS ---
+
+      const useScrollReveal = (threshold = 0.1) => {
+        const [isVisible, setIsVisible] = useState(false);
+        const ref = useRef(null);
+        useEffect(() => {
+          const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); }
+          }, { threshold });
+          if (ref.current) observer.observe(ref.current);
+          return () => { if (ref.current) observer.unobserve(ref.current); };
+        }, [threshold]);
+        return { ref, isVisible };
+      };
+
+      // Magnetic Button Component
+      const Button = ({ variant = 'primary', children, className = '', ...props }) => {
+        const btnRef = useRef(null);
+        
+        const handleMouseMove = (e) => {
+            const rect = btnRef.current.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btnRef.current.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        };
+
+        const handleMouseLeave = () => {
+            btnRef.current.style.transform = 'translate(0, 0)';
+        };
+
+        const baseStyles = "relative px-8 py-3 uppercase tracking-[0.2em] text-sm transition-all duration-500 ease-out flex items-center justify-center font-medium overflow-hidden group";
+        const variants = {
+          primary: "border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black shadow-[0_0_15px_rgba(212,175,55,0.1)] hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]",
+          outline: "border border-white/20 text-neutral-300 hover:border-[#D4AF37] hover:text-[#D4AF37] backdrop-blur-sm",
+        };
+
+        return (
+          <button 
+            ref={btnRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className={`${baseStyles} ${variants[variant]} ${className}`} 
+            {...props}
+          >
+            <span className="relative z-10 flex items-center gap-2">{children}</span>
+            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
+          </button>
+        );
+      };
+
+      const CustomCursor = () => {
+        const cursorRef = useRef(null);
+        const ringRef = useRef(null);
+        const [isHovered, setIsHovered] = useState(false);
+
+        useEffect(() => {
+          const onMouseMove = (e) => {
+            if (cursorRef.current) cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            if (ringRef.current) {
+                // Smooth follow
+                ringRef.current.animate({
+                    transform: `translate(${e.clientX}px, ${e.clientY}px)`
+                }, { duration: 500, fill: "forwards" });
+            }
+          };
+          const onMouseOver = (e) => {
+            const target = e.target;
+            const interactive = target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button') || target.closest('.cursor-pointer');
+            setIsHovered(!!interactive);
+          };
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseover', onMouseOver);
+          return () => {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseover', onMouseOver);
+          };
+        }, []);
+
+        return (
+          <>
+            <div ref={cursorRef} className="fixed top-0 left-0 w-2 h-2 bg-[#D4AF37] rounded-full pointer-events-none z-[9999] -ml-1 -mt-1 hidden md:block mix-blend-difference" />
+            <div 
+                ref={ringRef} 
+                className={`fixed top-0 left-0 w-12 h-12 border border-[#D4AF37] rounded-full pointer-events-none z-[9998] -ml-6 -mt-6 transition-all duration-300 ease-out hidden md:block mix-blend-difference
+                ${isHovered ? 'scale-150 bg-[#D4AF37]/20 border-transparent backdrop-blur-[1px]' : 'scale-100'}
+                `} 
+            />
+          </>
+        );
+      };
+
+      const LegalModal = ({ isOpen, onClose, title, content }) => {
+        if (!isOpen) return null;
+        return (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity duration-300" onClick={onClose}></div>
+            <div className="relative bg-neutral-950 border border-[#D4AF37]/30 w-full max-w-2xl max-h-[80vh] flex flex-col p-8 shadow-[0_0_50px_rgba(212,175,55,0.15)] animate-in fade-in zoom-in-95 duration-500">
+              <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                  <h2 className="text-2xl font-serif text-white">{title}</h2>
+                  <button onClick={onClose} className="hover:rotate-90 transition-transform duration-300"><X /></button>
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: content }} className="text-neutral-300 font-light leading-relaxed space-y-4" />
+            </div>
+          </div>
+        );
+      };
+
+      // --- UPDATED IMAGE GALLERY MODAL (NO ZOOM/CROP) ---
+      const ImageGalleryModal = ({ isOpen, onClose, images, title }) => {
+        if (!isOpen || !images) return null;
+        return (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+             <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={onClose}></div>
+             <button onClick={onClose} className="absolute top-6 right-6 text-white hover:text-[#D4AF37] z-[110]"><X size={32}/></button>
+             
+             <div className="relative w-full max-w-7xl h-[90vh] z-[105] overflow-y-auto p-4 scrollbar-hide">
+                <h3 className="text-3xl font-serif text-[#D4AF37] mb-8 text-center sticky top-0 bg-black/80 py-4 backdrop-blur-md z-50">{title} Gallery</h3>
+                
+                {/* CHANGED: Removed grid height constraints and object-cover to show original size */}
+                <div className="flex flex-col gap-8 items-center">
+                   {images.map((img, idx) => (
+                      <div key={idx} className="w-full max-w-4xl bg-neutral-900/30 p-2 rounded-sm border border-white/5">
+                          <img 
+                              src={img} 
+                              alt={`Gallery Image ${idx + 1}`} 
+                              className="w-full h-auto shadow-2xl" 
+                              onError={(e) => {e.target.src='https://via.placeholder.com/400x600?text=Image+Not+Found';}} 
+                           />
+                      </div>
+                   ))}
+                </div>
+             </div>
+          </div>
+        );
+      };
+
+      const Navbar = ({ isDark, toggleTheme }) => {
+        const [scrolled, setScrolled] = useState(false);
+        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+        useEffect(() => {
+          const handleScroll = () => setScrolled(window.scrollY > 50);
+          window.addEventListener('scroll', handleScroll);
+          return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        return (
+          <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-8'}`}>
+            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                 <img 
+                   src="./logo.jpg" 
+                   alt="PSV Logo" 
+                   className={`transition-all duration-500 rounded-2xl object-contain p-1 bg-black border border-white/10 logo-container ${scrolled ? 'h-20 w-20' : 'h-24 w-24'}`}
+                 />
+              </div>
+              <div className="hidden md:flex items-center gap-12">
+                  {['Portfolio', 'Studio', 'Services', 'Team', 'Process'].map((item, i) => (
+                      <a 
+                        key={item} 
+                        href={`#${item.toLowerCase()}`} 
+                        className="text-xs uppercase tracking-widest text-neutral-300 hover:text-[#D4AF37] transition-colors hover-underline"
+                        style={{ transitionDelay: `${i * 100}ms` }}
+                      >
+                        {item}
+                      </a>
+                  ))}
+              </div>
+              <div className="hidden md:flex items-center gap-6">
+                  <a href="#contact"><Button variant={scrolled ? 'primary' : 'outline'} className="text-xs py-2 px-6">Enquire</Button></a>
+                  
+                  <button 
+                    onClick={toggleTheme} 
+                    className="p-3 rounded-full border border-white/10 hover:border-[#D4AF37] hover:text-[#D4AF37] text-neutral-300 transition-all duration-300"
+                    aria-label="Toggle Theme"
+                  >
+                    {isDark ? <Moon size={18} /> : <Sun size={18} />}
+                  </button>
+              </div>
+              <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen ? <X /> : <Menu />}</button>
+            </div>
+            
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+              <div className="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center space-y-8 md:hidden animate-in slide-in-from-right duration-300">
+                  {['Portfolio', 'Studio', 'Services', 'Team', 'Process', 'Contact'].map((item) => (
+                      <a key={item} href={`#${item.toLowerCase()}`} className="text-3xl font-serif text-white hover:text-[#D4AF37] transition-colors" onClick={() => setMobileMenuOpen(false)}>{item}</a>
+                  ))}
+                   <button 
+                    onClick={() => { toggleTheme(); setMobileMenuOpen(false); }}
+                    className="flex items-center gap-2 text-xl font-serif text-white hover:text-[#D4AF37] transition-colors"
+                  >
+                    {isDark ? <Moon size={24} /> : <Sun size={24} />} {isDark ? "Dark Mode" : "Light Mode"}
+                  </button>
+              </div>
+            )}
+          </nav>
+        );
+      };
+
+      const Hero = () => {
+        const [loaded, setLoaded] = useState(false);
+        const [scrollY, setScrollY] = useState(0);
+
+        useEffect(() => {
+            setTimeout(() => setLoaded(true), 100);
+            const handleScroll = () => setScrollY(window.scrollY);
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        return (
+          <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
+            {/* Parallax Background */}
+            <div 
+                className={`absolute inset-0 bg-black transition-transform duration-[2000ms] ease-out ${loaded ? 'scale-110' : 'scale-100'}`}
+                style={{ transform: `translateY(${scrollY * 0.5}px) scale(1.1)` }}
+            >
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000" className="w-full h-full object-cover opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90"></div>
+            </div>
+            
+            {/* Ambient Globs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#D4AF37]/10 rounded-full blur-[120px] animate-blob mix-blend-screen opacity-60"></div>
+              <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#D4AF37]/5 rounded-full blur-[120px] animate-blob animation-delay-2000 mix-blend-screen opacity-60"></div>
+            </div>
+
+            <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+              <div className={`transition-all duration-1000 ease-out delay-100 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <p className="text-[#D4AF37] tracking-[0.6em] text-[10px] md:text-sm mb-8 font-medium uppercase drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">PSV Design N Build</p>
+              </div>
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-12 drop-shadow-2xl">
+                <span className={`block transition-all duration-1000 ease-out delay-300 ${loaded ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-10 blur-sm'}`}>Building With <span className="italic font-light text-[#D4AF37]">Art</span>,</span>
+                <span className={`block transition-all duration-1000 ease-out delay-500 ${loaded ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-10 blur-sm'}`}>Designing With <span className="italic font-light text-[#D4AF37]">Soul</span>.</span>
+              </h1>
+              <div className={`flex justify-center transition-all duration-1000 ease-out delay-700 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <a href="#contact"><Button variant="outline" className="px-10 py-4 text-base">Start Your Journey</Button></a>
+              </div>
+            </div>
+            
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+                <span className="text-[10px] uppercase tracking-widest text-neutral-400">Scroll</span>
+                <ArrowDown size={16} className="text-[#D4AF37]" />
+            </div>
+          </section>
+        );
+      };
+
+      const SignatureStrip = () => (
+        <section className="bg-black py-0 border-t border-b border-neutral-800 overflow-hidden relative group z-20">
+          <div className="animate-marquee flex">
+            {[...MARQUEE_PROJECTS, ...MARQUEE_PROJECTS].map((project, index) => (
+              <div key={`${project.id}-${index}`} className="relative w-[80vw] md:w-[40vw] lg:w-[25vw] h-[40vh] flex-shrink-0 border-r border-neutral-800 group/card overflow-hidden bg-neutral-950">
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale opacity-60 group-hover/card:grayscale-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
+                <div className="absolute bottom-8 left-8 z-20 transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-500">
+                   <p className="text-[#D4AF37] text-[9px] tracking-[0.3em] uppercase mb-2 opacity-0 group-hover/card:opacity-100 transition-opacity">{project.category}</p>
+                   <h3 className="text-xl font-serif text-white group-hover/card:text-[#D4AF37] transition-colors">{project.title}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+
+      const About = () => {
+        const { ref: textRef, isVisible: textVisible } = useScrollReveal();
+        const { ref: imgRef, isVisible: imgVisible } = useScrollReveal(0.2);
+
+        return (
+          <section className="bg-neutral-950 py-32 px-6 md:px-12 lg:px-24 relative overflow-hidden" id="studio">
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#1a1a1a] to-transparent opacity-20 pointer-events-none"></div>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+              <div ref={textRef} className={`space-y-12 transition-reveal ${textVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
+                <div>
+                    <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-4 flex items-center gap-4">
+                        <span className="w-8 h-[1px] bg-[#D4AF37]"></span> The Studio
+                    </p>
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1]">We Create Spaces <br/> That <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#Fbf5b7]">Age With Grace</span>.</h2>
+                </div>
+                <p className="text-neutral-400 leading-relaxed text-lg font-light max-w-lg border-l border-neutral-800 pl-6">
+                  {COMPANY_DETAILS.name} is not just an architecture firm; it is a curator of lifestyles. We blend innovation with tradition, ensuring every structure tells a unique story of its inhabitants.
+                </p>
+                <div className="flex gap-4">
+                    <div className="flex -space-x-4">
+                        {[1,2,3].map(i => <div key={i} className="w-12 h-12 rounded-full border-2 border-black bg-neutral-800"></div>)}
+                    </div>
+                    <div className="flex flex-col justify-center">
+                        <span className="text-white font-serif text-xl">20+ Years</span>
+                        <span className="text-neutral-500 text-xs tracking-widest uppercase">Of Excellence</span>
+                    </div>
+                </div>
+              </div>
+              
+              <div ref={imgRef} className={`relative transition-reveal delay-300 ${imgVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
+                <div className="relative z-10 grid grid-cols-2 gap-6">
+                   <div className={`transform transition-transform duration-1000 delay-500 ${imgVisible ? 'translate-y-0' : 'translate-y-12'}`}>
+                     <div className="relative overflow-hidden group rounded-sm">
+                        <img src="https://picsum.photos/id/101/600/800" className="w-full h-80 object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                        <div className={`absolute inset-0 bg-[#D4AF37] z-20 transition-transform duration-1000 ease-out origin-bottom ${imgVisible ? 'scale-y-0' : 'scale-y-100'}`}></div>
+                     </div>
+                   </div>
+                   <div className={`transform transition-transform duration-1000 delay-700 ${imgVisible ? 'translate-y-0' : 'translate-y-24'}`}>
+                     <div className="relative overflow-hidden group rounded-sm mt-12">
+                        <img src="https://picsum.photos/id/203/600/800" className="w-full h-80 object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                        <div className={`absolute inset-0 bg-neutral-800 z-20 transition-transform duration-1000 ease-out origin-bottom delay-200 ${imgVisible ? 'scale-y-0' : 'scale-y-100'}`}></div>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Services = () => {
+        const [activeServiceGallery, setActiveServiceGallery] = useState(null);
+
+        return (
+          <section className="bg-black py-32 px-6" id="services">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-24">
+                <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-4">Our Expertise</p>
+                <h2 className="text-4xl md:text-6xl font-serif text-white">Curated Disciplines</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {SERVICES.map((service, index) => (
+                    <div 
+                      key={service.id} 
+                      onClick={() => setActiveServiceGallery(service)}
+                      className={`group p-10 border border-white/5 bg-neutral-900/20 hover:bg-neutral-900/50 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF37]/30 cursor-pointer`}
+                    >
+                      <div className="text-[#D4AF37] mb-6 p-4 bg-white/5 rounded-full w-fit group-hover:bg-[#D4AF37] group-hover:text-black transition-all duration-500">{service.icon}</div>
+                      <h3 className="text-2xl font-serif text-white mb-3 group-hover:text-[#D4AF37] transition-colors">{service.title}</h3>
+                      <p className="text-neutral-500 text-sm leading-relaxed group-hover:text-neutral-300 transition-colors">{service.description}</p>
+                      <div className="mt-4 text-[#D4AF37] text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2"><Camera size={14} /> View Gallery</div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            {/* GALLERY MODAL */}
+            {activeServiceGallery && (
+                <ImageGalleryModal 
+                    isOpen={!!activeServiceGallery} 
+                    onClose={() => setActiveServiceGallery(null)} 
+                    images={activeServiceGallery.galleryImages}
+                    title={activeServiceGallery.title}
+                />
+            )}
+          </section>
+        );
+      };
+
+      const FounderCard = ({ founder, index }) => {
+        const { ref, isVisible } = useScrollReveal(0.1);
+        return (
+          <div ref={ref} className={`group relative transition-reveal ${index === 1 ? 'delay-200' : ''} ${isVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
+            <div className="relative mb-8 overflow-hidden h-[600px] shadow-2xl bg-neutral-900">
+              <div className={`absolute inset-0 bg-[#D4AF37] z-30 transition-transform duration-[1500ms] ease-[cubic-bezier(0.83,0,0.17,1)] origin-top ${isVisible ? 'scale-y-0' : 'scale-y-100'}`} style={{ transitionDelay: `${index * 200}ms` }}></div>
+              <img src={founder.image} alt={founder.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-out group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+              <div className="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                  <h3 className="text-3xl font-serif text-white mb-1">{founder.name}</h3>
+                  <p className="text-[#D4AF37] text-xs uppercase tracking-widest mb-4">{founder.role}</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 line-clamp-3">{founder.description}</p>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Founders = () => (
+        <section className="bg-neutral-950 py-32 px-6 relative" id="founders">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-24">
+               <div>
+                  <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-4">Leadership</p>
+                  <h2 className="text-4xl md:text-6xl font-serif text-white">The Visionaries</h2>
+               </div>
+               <p className="text-neutral-500 max-w-md text-right hidden md:block"> guiding force behind our pursuit of architectural excellence and timeless design.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+                {FOUNDERS.map((founder, idx) => <FounderCard key={idx} founder={founder} index={idx} />)}
+            </div>
+          </div>
+        </section>
+      );
+      
+      // --- UPDATED TEAM SECTION WITH FIXES (ROTATION + CROPPING) ---
+      const TeamSection = () => {
+          const [activeTab, setActiveTab] = useState('office'); // 'office' or 'execution'
+          const [currentExecutionIndex, setCurrentExecutionIndex] = useState(0);
+
+          // --- Carousel Logic for Construction Team ---
+          useEffect(() => {
+            if (activeTab !== 'execution') return;
+            const interval = setInterval(() => {
+                setCurrentExecutionIndex((prevIndex) => 
+                    (prevIndex + 1) % TEAM_DATA.EXECUTION.length
+                );
+            }, 3000); 
+            return () => clearInterval(interval);
+          }, [activeTab]);
+
+          // Reset index when switching to execution tab
+          useEffect(() => {
+              if (activeTab === 'execution') {
+                  setCurrentExecutionIndex(0);
+              }
+          }, [activeTab]);
+
+          // --- Premium Button Styles ---
+          const baseButtonStyles = "relative px-10 py-4 uppercase tracking-[0.2em] text-sm font-medium transition-all duration-500 ease-out overflow-hidden group rounded-sm flex items-center gap-3 border";
+          const activeButtonStyles = "border-[#D4AF37] bg-[#D4AF37] text-black shadow-[0_0_30px_rgba(212,175,55,0.5)] scale-[1.02]";
+          const inactiveButtonStyles = "border-neutral-800 text-neutral-400 hover:border-[#D4AF37] hover:text-[#D4AF37] hover:bg-neutral-900/50";
+          
+          return (
+             <section className="bg-black py-32 px-6 overflow-hidden" id="team">
+                <div className="max-w-7xl mx-auto">
+                    {/* Section Header */}
+                    <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+                        <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-6 flex items-center justify-center gap-3">
+                          <span className="w-8 h-[1px] bg-[#D4AF37]"></span> Our Backbone <span className="w-8 h-[1px] bg-[#D4AF37]"></span>
+                        </p>
+                        <h2 className="text-5xl md:text-7xl font-serif text-white mb-12">Meet The Team</h2>
+                        
+                        {/* ANIMATED TOGGLE BUTTONS */}
+                        <div className="flex flex-wrap justify-center gap-6">
+                            <button 
+                             onClick={() => setActiveTab('office')}
+                             className={`${baseButtonStyles} ${activeTab === 'office' ? activeButtonStyles : inactiveButtonStyles}`}
+                            >
+                              <Users size={18} className="relative z-10" /> 
+                              <span className="relative z-10">Office Team</span>
+                              <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                            </button>
+                            
+                            <button 
+                             onClick={() => setActiveTab('execution')}
+                             className={`${baseButtonStyles} ${activeTab === 'execution' ? activeButtonStyles : inactiveButtonStyles}`}
+                            >
+                              <HardHat size={18} className="relative z-10" /> 
+                              <span className="relative z-10">Construction Team</span>
+                              <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {/* CONTENT AREA */}
+                    <div className="min-h-[600px] relative">
+                        
+                        {/* === OFFICE TEAM CONTENT (Fix: Rotated Image) === */}
+                        <div className={`transition-opacity duration-700 ease-in-out absolute inset-0
+                            ${activeTab === 'office' ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}>
+                             {TEAM_DATA.OFFICE.map((img, idx) => (
+                                <div key={`office-${idx}`} className="group relative overflow-hidden rounded-lg border border-white/10 shadow-2xl h-[600px] w-full bg-neutral-900">
+                                    
+                                    {/* LAYER 1: Blurred Background */}
+                                    <div className="absolute inset-0 z-0">
+                                        <img 
+                                          src={img} 
+                                          alt="" 
+                                          className="w-full h-full object-cover blur-xl opacity-40 scale-110" 
+                                        />
+                                    </div>
+
+                                    {/* LAYER 2: Main Image - FIX APPLIED: rotate-90 added */}
+                                    <img 
+                                      src={img} 
+                                      alt="Office Team" 
+                                      className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105 rotate-180"
+                                      onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Office+Team+Photo';}}
+                                    />
+                                    
+                                    {/* Text Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 z-20"></div>
+                                    <div className="absolute bottom-0 left-0 p-10 select-none z-30">
+                                            <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">Design & Management</span>
+                                            <h3 className="text-3xl font-serif text-white">The Minds Behind The Vision.</h3>
+                                    </div>
+                                </div>
+                             ))}
+                        </div>
+
+                        {/* === CONSTRUCTION TEAM CONTENT (Fix: object-top for faces) === */}
+                         <div className={`transition-opacity duration-700 ease-in-out absolute inset-0 h-[600px] w-full rounded-lg overflow-hidden border border-white/10 shadow-2xl
+                            ${activeTab === 'execution' ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}>
+                             
+                             {TEAM_DATA.EXECUTION.map((img, idx) => (
+                                <div key={`exec-${idx}`} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out
+                                     ${idx === currentExecutionIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+                                   
+                                   {/* FIX APPLIED: Changed object-cover to object-cover object-top */}
+                                   <img 
+                                     src={img} 
+                                     alt={`Construction Team ${idx + 1}`} 
+                                     className="w-full h-full object-cover grayscale-[30%]"
+                                     onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Construction+Team+Photo';}}
+                                   />
+                                   
+                                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
+                                   <div className="absolute bottom-0 left-0 p-10 select-none">
+                                            <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">On-Site Execution</span>
+                                            <h3 className="text-3xl font-serif text-white">The Hands That Build Dreams.</h3>
+                                   </div>
+                                </div>
+                             ))}
+
+                             {/* Carousel Indicators */}
+                             <div className="absolute bottom-6 right-6 flex gap-2 z-20">
+                                 {TEAM_DATA.EXECUTION.map((_, idx) => (
+                                     <div 
+                                        key={`indicator-${idx}`}
+                                        className={`h-1 rounded-full transition-all duration-500 ${idx === currentExecutionIndex ? 'w-8 bg-[#D4AF37]' : 'w-4 bg-white/30'}`}
+                                     ></div>
+                                 ))}
+                             </div>
+                        </div>
+
+                    </div>
+                </div>
+             </section>
+          );
+      };
+
+      const ProjectFlipCard = ({ project }) => {
+        const [flipped, setFlipped] = useState(false);
+        return (
+          <div 
+            className="group relative h-[450px] w-full cursor-pointer perspective-1000 mb-8 break-inside-avoid"
+            onClick={() => setFlipped(!flipped)}
+          >
+              <div className={`relative h-full w-full transition-transform duration-700 transform-style-3d ${flipped ? 'rotate-y-180' : ''}`}>
+                <div className="absolute inset-0 backface-hidden rounded-sm overflow-hidden shadow-lg">
+                   <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700" />
+                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500"></div>
+                   <div className="absolute bottom-8 left-8">
+                      <p className="text-[#D4AF37] text-[10px] tracking-[0.3em] uppercase mb-2">{project.category}</p>
+                      <h3 className="text-2xl font-serif text-white italic">{project.title}</h3>
+                      <div className="flex items-center gap-2 mt-4 text-xs text-white/70 uppercase tracking-widest">
+                         <RotateCw size={12} className={flipped ? 'hidden' : 'block animate-spin-slow'} />
+                         Click for Details
+                      </div>
+                   </div>
+                </div>
+                <div className="absolute inset-0 h-full w-full bg-[#111] border border-[#D4AF37]/30 rotate-y-180 backface-hidden flex flex-col items-center justify-center p-8 text-center rounded-sm shadow-xl">
+                   <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] mb-4">{project.category}</p>
+                   <h3 className="text-3xl font-serif text-white mb-2">{project.title}</h3>
+                   <div className="w-12 h-[1px] bg-white/20 my-6"></div>
+                   <p className="text-neutral-300 font-light text-sm leading-relaxed mb-8">{project.description}</p>
+                   <div className="grid grid-cols-2 gap-8 w-full border-t border-white/10 pt-6">
+                      <div>
+                        <span className="block text-[#D4AF37] text-[10px] uppercase tracking-widest mb-1">Area</span>
+                        <span className="text-white font-serif">{project.area}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[#D4AF37] text-[10px] uppercase tracking-widest mb-1">Location</span>
+                        <span className="text-white font-serif">{project.location}</span>
+                      </div>
+                   </div>
+                   <button className="absolute bottom-4 right-4 text-white/20 hover:text-[#D4AF37] transition-colors" onClick={(e) => { e.stopPropagation(); setFlipped(false); }}>
+                      <RotateCw size={16} />
+                   </button>
+                </div>
+             </div>
+          </div>
+        );
+      };
+
+      const Portfolio = () => (
+        <section className="bg-black py-32 px-6" id="portfolio">
+          <div className="max-w-7xl mx-auto mb-20 flex flex-col md:flex-row justify-between items-end border-b border-neutral-900 pb-8">
+             <div className="max-w-2xl">
+                <p className="text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-medium mb-4">Selected Works</p>
+                <h2 className="text-4xl md:text-6xl font-serif text-white">Architectural Stories</h2>
+             </div>
+             <p className="text-neutral-500 text-xs mt-4 md:mt-0 uppercase tracking-widest">Click images to reveal details</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+            {PORTFOLIO_PROJECTS.map((project, idx) => (
+              <ProjectFlipCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+      );
+
+      const Process = () => {
+        const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+        const sectionRef = useRef(null);
+        const [lineHeight, setLineHeight] = useState(0);
+
+        useEffect(() => {
+            const handleScroll = () => {
+                if (!sectionRef.current) return;
+                const rect = sectionRef.current.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const end = rect.height;
+                const scrollPos = (windowHeight * 0.6) - rect.top;
+                let percentage = (scrollPos / end) * 100;
+                if (percentage < 0) percentage = 0;
+                if (percentage > 100) percentage = 100;
+                setLineHeight(percentage);
+            };
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        const steps = [
+            { id: '01', title: "Discovery & Vision", desc: "Understanding the site, the light, and your aspirations.", icon: <Lightbulb className="w-5 h-5"/> },
+            { id: '02', title: "Concept Development", desc: "Translating dreams into sketches and spatial narratives.", icon: <PenTool className="w-5 h-5"/> },
+            { id: '03', title: "Design + Execution", desc: "Precision engineering meets artistic detailing.", icon: <Ruler className="w-5 h-5"/> },
+            { id: '04', title: "Completion", desc: "The final reveal, curated to perfection.", icon: <Star className="w-5 h-5"/> }
+        ];
+
+        return (
+            <section id="process" className="relative py-32 px-6 overflow-hidden bg-neutral-950">
+                <div className="max-w-7xl mx-auto text-center mb-32 relative z-10">
+                    <div ref={headerRef} className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                        <p className="text-[#F2B544] uppercase tracking-[0.3em] text-xs font-medium mb-6">How We Build</p>
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white">The <span className="italic text-[#F2B544]">Art</span> of Execution</h2>
+                    </div>
+                </div>
+
+                <div className="max-w-5xl mx-auto relative" ref={sectionRef}>
+                    <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[1px] bg-neutral-800 md:-translate-x-1/2">
+                        <div className="w-full bg-[#F2B544] shadow-[0_0_15px_#F2B544]" style={{ height: `${lineHeight}%` }}></div>
+                        <div className="absolute w-3 h-3 rounded-full bg-[#F2B544] shadow-[0_0_20px_#F2B544] -left-[5px] z-10" style={{ top: `${lineHeight}%` }}></div>
+                    </div>
+
+                    <div className="space-y-24">
+                        {steps.map((step, idx) => (
+                            <div key={idx} className={`relative flex items-center justify-between md:gap-12 w-full ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col gap-8 pl-16 md:pl-0`}>
+                                <div className="w-full md:w-[45%] group">
+                                    <div className="p-8 border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:border-[#F2B544]/50 transition-all duration-500 rounded-sm">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <span className="text-4xl font-serif text-[#F2B544]/20 group-hover:text-[#F2B544] transition-colors">{step.id}</span>
+                                            <div className="text-neutral-500 group-hover:text-white transition-colors">{step.icon}</div>
+                                        </div>
+                                        <h3 className="text-xl font-serif text-white mb-2">{step.title}</h3>
+                                        <p className="text-neutral-400 font-light text-sm">{step.desc}</p>
+                                    </div>
+                                </div>
+                                <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black border border-[#F2B544] rounded-full z-20"></div>
+                                <div className="hidden md:block w-[45%]"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+      };
+
+      const Testimonials = () => {
+         const [active, setActive] = useState(0);
+         useEffect(() => {
+           const interval = setInterval(() => setActive((prev) => (prev + 1) % REVIEWS.length), 5000);
+           return () => clearInterval(interval);
+         }, []);
+
+         return (
+           <section className="bg-black py-40 px-6 relative overflow-hidden">
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-[#D4AF37]"><Quote size={400} /></div>
+             <div className="max-w-4xl mx-auto text-center relative z-10">
+                 <h2 className="text-xs uppercase tracking-[0.3em] font-medium text-[#D4AF37] mb-20">Client Perspectives</h2>
+                 <div className="relative h-[200px]">
+                    {REVIEWS.map((review, idx) => (
+                       <div key={review.id} className={`absolute w-full top-0 left-0 transition-all duration-1000 ease-in-out ${idx === active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                          <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white leading-tight mb-8">"{review.quote}"</h3>
+                          <div className="flex flex-col items-center gap-1">
+                             <span className="text-[#D4AF37] text-sm uppercase tracking-widest font-medium">{review.client}</span>
+                             <span className="text-neutral-600 text-[10px] tracking-[0.2em] uppercase">{review.project}</span>
+                          </div>
+                       </div>
+                    ))}
+                 </div>
+             </div>
+           </section>
+         );
+      };
+
+      const Contact = () => {
+         const { ref, isVisible } = useScrollReveal();
+         return (
+           <section className="bg-neutral-950 py-32 px-6" id="contact">
+             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+               <div ref={ref} className={`transition-reveal ${isVisible ? 'reveal-visible' : 'reveal-hidden'}`}>
+                   <h2 className="text-5xl md:text-7xl font-serif text-white mb-8">Let's Build <br/>Something <span className="text-[#D4AF37] italic">Timeless.</span></h2>
+                   <p className="text-neutral-400 font-light text-lg mb-12 max-w-md">We invite you to discuss your vision with us.</p>
+                   <div className="space-y-8 text-neutral-300 font-light">
+                       <div>
+                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Visit Us</span>
+                           <a href={COMPANY_DETAILS.mapLink} target="_blank" className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.location}</a>
+                       </div>
+                       <div>
+                           <span className="text-[#D4AF37] text-xs uppercase tracking-[0.2em] block mb-2">Contact</span>
+                           <div className="flex flex-col gap-1">
+                               <a href={`tel:${COMPANY_DETAILS.phone1}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone1}</a>
+                               <a href={`tel:${COMPANY_DETAILS.phone2}`} className="text-xl hover:text-[#D4AF37] transition-colors">{COMPANY_DETAILS.phone2}</a>
+                               <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-xl hover:text-[#D4AF37] transition-colors mt-2">{COMPANY_DETAILS.email}</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               
+               <div className="bg-[#0a0a0a] p-10 md:p-16 border border-white/5 shadow-2xl">
+                   <form action="https://api.web3forms.com/submit" method="POST" className="space-y-10">
+                       <input type="hidden" name="access_key" value="c0046d2e-8435-4ac9-8053-17d3fe9802e7" />
+                       <div className="group relative">
+                           <input type="text" name="name" placeholder="Name" required className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 font-light text-lg" />
+                       </div>
+                       <div className="group relative">
+                           <input type="email" name="email" placeholder="Email Address" required className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 font-light text-lg" />
+                       </div>
+                       <div className="group relative">
+                           <input type="text" name="project_type" placeholder="Project Type" className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 font-light text-lg" />
+                       </div>
+                       <div className="group relative">
+                           <textarea name="message" rows={4} placeholder="Tell us about your vision" required className="w-full bg-transparent border-b border-neutral-800 py-4 text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-500 placeholder-neutral-600 resize-none font-light text-lg"></textarea>
+                       </div>
+                       <Button variant="primary" className="w-full py-5 text-lg">Send Enquiry</Button>
+                   </form>
+               </div>
+             </div>
+           </section>
+         );
+      };
+
+      const Footer = () => {
+        const [activeModal, setActiveModal] = useState(null);
+        return (
+          <>
+            <footer className="bg-black py-24 px-6 border-t border-neutral-900 text-center">
+                <h2 className="text-3xl font-serif text-white tracking-wider mb-2">{COMPANY_DETAILS.name}</h2>
+                <p className="text-neutral-600 text-sm mb-12">{COMPANY_DETAILS.tagline}</p>
+                <div className="flex justify-center gap-8 mb-16">
+                  <a href={COMPANY_DETAILS.instagram} target="_blank" className="text-neutral-500 hover:text-[#D4AF37] transition-colors transform hover:scale-125 duration-300"><Instagram size={24}/></a>
+                  <a href={COMPANY_DETAILS.facebook} target="_blank" className="text-neutral-500 hover:text-[#D4AF37] transition-colors transform hover:scale-125 duration-300"><Facebook size={24}/></a>
+                </div>
+                <div className="flex justify-center gap-12 text-[11px] text-neutral-500 uppercase tracking-[0.2em] mb-16">
+                   <button onClick={() => setActiveModal('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+                   <button onClick={() => setActiveModal('terms')} className="hover:text-white transition-colors">Terms</button>
+                </div>
+                <p className="text-neutral-800 text-[10px]">© {new Date().getFullYear()} {COMPANY_DETAILS.name}. All Rights Reserved.</p>
+                
+                <div className="mt-16 pt-8 border-t border-neutral-900 w-full max-w-md mx-auto flex flex-col items-center">
+                    <p className="text-[#D4AF37] text-[9px] uppercase tracking-[0.3em] mb-2 opacity-70">Crafted by</p>
+                    <div className="flex items-center gap-2 group cursor-pointer">
+                        <span className="text-neutral-400 text-xs tracking-widest group-hover:text-white transition-colors">BRAND SPARK</span>
+                        <a href="https://www.instagram.com/brandspark.official" target="_blank"><Instagram size={12} className="text-neutral-600 group-hover:text-[#D4AF37]"/></a>
+                    </div>
+                </div>
+            </footer>
+            <LegalModal isOpen={activeModal === 'privacy'} onClose={() => setActiveModal(null)} title="Privacy Policy" content={LEGAL_CONTENT.PRIVACY} />
+            <LegalModal isOpen={activeModal === 'terms'} onClose={() => setActiveModal(null)} title="Terms & Conditions" content={LEGAL_CONTENT.TERMS} />
+          </>
+        );
+      };
+
+      const App = () => {
+        const [isDark, setIsDark] = useState(true);
+
+        useEffect(() => { 
+            document.documentElement.style.scrollBehavior = 'smooth'; 
+        }, []);
+
+        const toggleTheme = () => {
+            setIsDark(!isDark);
+            if (isDark) {
+                document.body.classList.add('light-mode');
+            } else {
+                document.body.classList.remove('light-mode');
+            }
+        };
+
+        return (
+          <div className="min-h-screen bg-black text-neutral-200 overflow-x-hidden selection:bg-[#D4AF37] selection:text-black">
+            <div className="bg-grain"></div>
+            <CustomCursor />
+            <Navbar isDark={isDark} toggleTheme={toggleTheme} />
+            <Hero />
+            <SignatureStrip />
+            <About />
+            <Services />
+            <Portfolio />
+            <Founders />
+            <TeamSection /> 
+            <Process />
+            <Testimonials />
+            <Contact />
+            <Footer />
+          </div>
+        );
+      };
+
+      const root = createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
