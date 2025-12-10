@@ -105,31 +105,39 @@
       }
 
       /* =========================================
-         ULTRA-PREMIUM LIGHT MODE STYLING
+         ULTRA-PREMIUM LIGHT MODE STYLING (TEXTURED)
          ========================================= */
       
-      /* Backgrounds - Warm Creamy White */
-      .light-mode { background-color: #FDFBF7 !important; color: #1C1C1C !important; }
+      /* Backgrounds - Warm Creamy White with Paper Texture feel */
+      .light-mode { 
+          background-color: #FDFBF7 !important; 
+          color: #1C1C1C !important; 
+          /* Subtle dot pattern for texture */
+          background-image: radial-gradient(#9965151a 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+      }
+      
+      /* Light Mode Section Overrides */
       .light-mode .bg-black { background-color: #FDFBF7 !important; }
-      .light-mode .bg-neutral-950 { background-color: #F5F2EB !important; }
+      .light-mode .bg-neutral-950 { background-color: #F5F2EB !important; border-top: 1px solid #e5e5e5; }
       .light-mode .bg-[#0a0a0a] { background-color: #FFFFFF !important; }
       
-      /* Grain Opacity - Very Subtle */
-      .light-mode .bg-grain { opacity: 0.04 !important; }
+      /* Textures - Increased Grain for "Paper" Feel in Light Mode */
+      .light-mode .bg-grain { opacity: 0.12 !important; mix-blend-mode: multiply; }
 
       /* TYPOGRAPHY COLORS */
       .light-mode .text-neutral-200, 
-      .light-mode .text-white { color: #000000 !important; } /* Pure black for max contrast */
+      .light-mode .text-white { color: #050505 !important; } /* Deep black for contrast */
       
-      .light-mode .text-neutral-300 { color: #2D2D2D !important; } /* Dark Charcoal */
-      .light-mode .text-neutral-400 { color: #4A4A4A !important; } 
-      .light-mode .text-neutral-500 { color: #555555 !important; }
-      .light-mode .text-neutral-600 { color: #333333 !important; }
+      .light-mode .text-neutral-300 { color: #333333 !important; } 
+      .light-mode .text-neutral-400 { color: #555555 !important; } 
+      .light-mode .text-neutral-500 { color: #666666 !important; }
+      .light-mode .text-neutral-600 { color: #444444 !important; }
       
       /* GOLD ACCENT TUNING FOR LIGHT MODE - DARKER & RICHER */
       .light-mode .text-[#D4AF37], 
       .light-mode .text-[#F2B544] { 
-          color: #996515 !important; /* Deep Metallic Gold/Bronze for visibility */
+          color: #996515 !important; /* Deep Metallic Gold/Bronze for visibility on white */
           font-weight: 600 !important;
       }
       .light-mode .border-[#D4AF37] { border-color: #996515 !important; }
@@ -145,14 +153,14 @@
       .light-mode .bg-white\/\[0\.02\],
       .light-mode .bg-neutral-900 { 
           background-color: #FFFFFF !important; 
-          box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
-          border: 1px solid rgba(153, 101, 21, 0.15) !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+          border: 1px solid rgba(153, 101, 21, 0.1) !important;
       }
 
       /* Card Hover */
       .light-mode .group:hover .bg-neutral-900\/20 {
-          box-shadow: 0 15px 30px rgba(153, 101, 21, 0.1) !important;
-          border-color: rgba(153, 101, 21, 0.4) !important;
+          box-shadow: 0 15px 30px rgba(153, 101, 21, 0.08) !important;
+          border-color: rgba(153, 101, 21, 0.3) !important;
       }
 
       /* Borders */
@@ -161,7 +169,7 @@
       .light-mode .border-white\/20, 
       .light-mode .border-neutral-800, 
       .light-mode .border-neutral-900 { 
-          border-color: rgba(0,0,0,0.08) !important; 
+          border-color: rgba(0,0,0,0.06) !important; 
       }
 
       /* Navbar */
@@ -169,18 +177,26 @@
           background-color: rgba(253, 251, 247, 0.95) !important; 
           border-bottom: 1px solid rgba(153, 101, 21, 0.1) !important;
       }
+
+      /* --- LOGO FIX FOR LIGHT MODE --- */
+      /* Keeps the logo container black/dark with a gold border so the logo pops */
+      .light-mode .logo-container {
+        background-color: #050505 !important;
+        border: 1px solid #996515 !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
       
       /* Forms */
       .light-mode input, .light-mode textarea {
           color: #000000 !important;
-          border-bottom: 1px solid #999 !important;
+          border-bottom: 1px solid #aaa !important;
           background: transparent !important;
       }
       .light-mode input:focus, .light-mode textarea:focus {
           border-bottom: 1px solid #996515 !important;
       }
       .light-mode input::placeholder, .light-mode textarea::placeholder {
-          color: #666 !important;
+          color: #777 !important;
       }
 
       /* Marquee Images */
@@ -190,7 +206,7 @@
       }
       .light-mode .animate-marquee .bg-neutral-950 {
           background-color: #FFFFFF !important;
-          border-right: 1px solid #eaeaea !important;
+          border-right: 1px solid #eee !important;
       }
 
       /* Hero Text Exception - Keep White on Image */
@@ -529,7 +545,7 @@
                  <img 
                    src="./logo.jpg" 
                    alt="PSV Logo" 
-                   className={`transition-all duration-500 rounded-2xl object-contain p-1 bg-black border border-white/10 ${scrolled ? 'h-20 w-20' : 'h-24 w-24'}`}
+                   className={`transition-all duration-500 rounded-2xl object-contain p-1 bg-black border border-white/10 logo-container ${scrolled ? 'h-20 w-20' : 'h-24 w-24'}`}
                  />
               </div>
               <div className="hidden md:flex items-center gap-12">
@@ -766,7 +782,7 @@
         </section>
       );
       
-      // --- NEW TEAM SECTION COMPONENT WITH BLUR EFFECT & CAROUSEL ---
+      // --- UPDATED TEAM SECTION WITH FIXES (ROTATION + CROPPING) ---
       const TeamSection = () => {
           const [activeTab, setActiveTab] = useState('office'); // 'office' or 'execution'
           const [currentExecutionIndex, setCurrentExecutionIndex] = useState(0);
@@ -799,86 +815,89 @@
                 <div className="max-w-7xl mx-auto">
                     {/* Section Header */}
                     <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                       <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-6 flex items-center justify-center gap-3">
-                         <span className="w-8 h-[1px] bg-[#D4AF37]"></span> Our Backbone <span className="w-8 h-[1px] bg-[#D4AF37]"></span>
-                       </p>
-                       <h2 className="text-5xl md:text-7xl font-serif text-white mb-12">Meet The Team</h2>
-                       
-                       {/* ANIMATED TOGGLE BUTTONS */}
-                       <div className="flex flex-wrap justify-center gap-6">
-                           <button 
+                        <p className="text-[#D4AF37] uppercase tracking-[0.3em] text-xs font-medium mb-6 flex items-center justify-center gap-3">
+                          <span className="w-8 h-[1px] bg-[#D4AF37]"></span> Our Backbone <span className="w-8 h-[1px] bg-[#D4AF37]"></span>
+                        </p>
+                        <h2 className="text-5xl md:text-7xl font-serif text-white mb-12">Meet The Team</h2>
+                        
+                        {/* ANIMATED TOGGLE BUTTONS */}
+                        <div className="flex flex-wrap justify-center gap-6">
+                            <button 
                              onClick={() => setActiveTab('office')}
                              className={`${baseButtonStyles} ${activeTab === 'office' ? activeButtonStyles : inactiveButtonStyles}`}
-                           >
-                             <Users size={18} className="relative z-10" /> 
-                             <span className="relative z-10">Office Team</span>
-                             <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
-                           </button>
-                           
-                           <button 
+                            >
+                              <Users size={18} className="relative z-10" /> 
+                              <span className="relative z-10">Office Team</span>
+                              <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                            </button>
+                            
+                            <button 
                              onClick={() => setActiveTab('execution')}
                              className={`${baseButtonStyles} ${activeTab === 'execution' ? activeButtonStyles : inactiveButtonStyles}`}
-                           >
-                             <HardHat size={18} className="relative z-10" /> 
-                             <span className="relative z-10">Construction Team</span>
-                             <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
-                           </button>
-                       </div>
+                            >
+                              <HardHat size={18} className="relative z-10" /> 
+                              <span className="relative z-10">Construction Team</span>
+                              <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                            </button>
+                        </div>
                     </div>
                     
                     {/* CONTENT AREA */}
                     <div className="min-h-[600px] relative">
                         
-                        {/* === OFFICE TEAM CONTENT (Fix: Blur Background + Full Image) === */}
+                        {/* === OFFICE TEAM CONTENT (Fix: Rotated Image) === */}
                         <div className={`transition-opacity duration-700 ease-in-out absolute inset-0
                             ${activeTab === 'office' ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}>
                              {TEAM_DATA.OFFICE.map((img, idx) => (
                                 <div key={`office-${idx}`} className="group relative overflow-hidden rounded-lg border border-white/10 shadow-2xl h-[600px] w-full bg-neutral-900">
-                                   
-                                   {/* LAYER 1: Blurred Background (Fills the box) */}
-                                   <div className="absolute inset-0 z-0">
-                                       <img 
-                                         src={img} 
-                                         alt="" 
-                                         className="w-full h-full object-cover blur-xl opacity-40 scale-110" 
-                                       />
-                                   </div>
+                                    
+                                    {/* LAYER 1: Blurred Background */}
+                                    <div className="absolute inset-0 z-0">
+                                        <img 
+                                          src={img} 
+                                          alt="" 
+                                          className="w-full h-full object-cover blur-xl opacity-40 scale-110" 
+                                        />
+                                    </div>
 
-                                   {/* LAYER 2: Main Image (Shows full vertical photo without cropping) */}
-                                   <img 
-                                     src={img} 
-                                     alt="Office Team" 
-                                     className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
-                                     onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Office+Team+Photo';}}
-                                   />
-                                   
-                                   {/* Text Overlay */}
-                                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 z-20"></div>
-                                   <div className="absolute bottom-0 left-0 p-10 select-none z-30">
-                                       <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">Design & Management</span>
-                                       <h3 className="text-3xl font-serif text-white">The Minds Behind The Vision.</h3>
-                                   </div>
+                                    {/* LAYER 2: Main Image - FIX APPLIED: rotate-90 added */}
+                                    <img 
+                                      src={img} 
+                                      alt="Office Team" 
+                                      className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105 rotate-90"
+                                      onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Office+Team+Photo';}}
+                                    />
+                                    
+                                    {/* Text Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 z-20"></div>
+                                    <div className="absolute bottom-0 left-0 p-10 select-none z-30">
+                                            <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">Design & Management</span>
+                                            <h3 className="text-3xl font-serif text-white">The Minds Behind The Vision.</h3>
+                                    </div>
                                 </div>
                              ))}
                         </div>
 
-                        {/* === CONSTRUCTION TEAM CONTENT (Auto-Scrolling Carousel) === */}
+                        {/* === CONSTRUCTION TEAM CONTENT (Fix: object-top for faces) === */}
                          <div className={`transition-opacity duration-700 ease-in-out absolute inset-0 h-[600px] w-full rounded-lg overflow-hidden border border-white/10 shadow-2xl
                             ${activeTab === 'execution' ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}>
                              
                              {TEAM_DATA.EXECUTION.map((img, idx) => (
                                 <div key={`exec-${idx}`} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out
                                      ${idx === currentExecutionIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+                                   
+                                   {/* FIX APPLIED: Changed object-cover to object-cover object-top */}
                                    <img 
                                      src={img} 
                                      alt={`Construction Team ${idx + 1}`} 
-                                     className="w-full h-full object-cover grayscale-[30%]"
+                                     className="w-full h-full object-cover object-top grayscale-[30%]"
                                      onError={(e) => {e.target.src='https://via.placeholder.com/1200x600?text=Construction+Team+Photo';}}
                                    />
+                                   
                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
                                    <div className="absolute bottom-0 left-0 p-10 select-none">
-                                       <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">On-Site Execution</span>
-                                       <h3 className="text-3xl font-serif text-white">The Hands That Build Dreams.</h3>
+                                            <span className="text-[#D4AF37] text-sm uppercase tracking-[0.2em] block mb-2">On-Site Execution</span>
+                                            <h3 className="text-3xl font-serif text-white">The Hands That Build Dreams.</h3>
                                    </div>
                                 </div>
                              ))}
@@ -1160,7 +1179,7 @@
             <Services />
             <Portfolio />
             <Founders />
-            <TeamSection /> {/* UPDATED TEAM SECTION WITH ANIMATIONS */}
+            <TeamSection /> 
             <Process />
             <Testimonials />
             <Contact />
